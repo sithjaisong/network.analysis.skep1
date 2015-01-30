@@ -13,11 +13,13 @@
  library(gdata)
 #---- Set working directory 
 # set your working directory
-wd = '~/Documents/R.github/network.analysis.skep1' 
-setwd(wd)
+#wd = '~/Documents/R.github/network.analysis.skep1' 
+#setwd(wd)
 
+Filepath <- '~/Google Drive/1.SKEP1/SKEP1survey.xls'
 #-----Load raw data (Survey data in SKEP 1)-----
-data <- read.xls("data/SKEP1survey.xls", 
+
+data <- read.xls(Filepath, 
                  sheet = 1, 
                  header = TRUE,
                  stringsAsFactor = FALSE)
@@ -31,4 +33,5 @@ data <- read.xls("data/SKEP1survey.xls",
 #---save data to R object ----
 
 save(data, file = "output/1-raw.skep1survey.RData")
+
 

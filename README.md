@@ -1,5 +1,6 @@
-# Network Analysis of SKEP survey pahse 1 data
+# Network Analysis of SKEP survey phase 1 data
 
+This project used for analysis the survey data which is from the SKEP project in Phase 1. 
 The structure of this project
 
 ```
@@ -11,8 +12,8 @@ proj/
 |-----function/
 |-----output/
 ```
-- The ``` R ```  folder will contain the Rscript
+- The ``` R ```  folder will contain the Rscript 
 - The ``` data ``` directory contain the file which used for the analysis
-- The ``` fig ``` directory contain the graph, fig, etc. 
-- The ``` function ``` directory contains the r function 
-- The ``` output ``` directory contains the output which are the products from Rscripts
+- The ``` fig ``` directory contain the graph, fig, etc. which are the products from the rscript only
+- The ``` function ``` directory contains the functions 
+- The ``` output ``` directory contains the output which are the products from Rscripts, the products will be saved as the RData.  file.
