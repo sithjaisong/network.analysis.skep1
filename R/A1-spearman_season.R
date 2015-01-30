@@ -1,10 +1,10 @@
 # generate the network model for the season
-#-- Wet season
+
 
 load(file = 'output/4-select.split.RData')
-
 data <- OutputProfile
 
+#-- Wet season
 ws <- data %>% 
         filter(season == "WS") %>%
         select(-c(country, season))
@@ -31,24 +31,25 @@ q3<- qgraph(ws.spear.cor,
             edge.labels = TRUE,
             edge.label.cex = 0.5,
             layout = "spring",
-            title = "Spearman's correlation based Network with bonf correction in Wet season")
+            title = "Spearman's correlation based Network with bonf correction in Wet season",
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.ws'
+            )
 
 #----------------------------Dry season---------------------
-ds.select.data <- select.output %>% 
-        filter( season == "DS")
 
-ds.select.data <- ds.select.data[-c(1:2)]
+ds <- data %>% 
+        filter(season == "DS") %>%
+        select(-c(country, season))
 
-c.ds.select.data <- ds.select.data[complete.cases(ds.select.data),]
+ds <- ds[, apply(ds, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
+ds<- ds[complete.cases(ds),] # exclude row which cantain NA
 
-c.ds.select.data <- subset( c.ds.select.data, select = -c(rtdx)) # remove the column named stbx
-
-ds.spear.cor <- cor(c.ds.select.data[-1], method = "spearman")
-
+ds.spear.cor <- cor(ds, method = "spearman")
 
 q4<- qgraph(ds.spear.cor,
-            sampleSize = nrow(c.select.data),
+            sampleSize = nrow(ds),
             graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
@@ -63,4 +64,7 @@ q4<- qgraph(ds.spear.cor,
             edge.labels = T,
             edge.label.cex = 0.5,
             layout = "spring",
-            title = "Spearman's correlation based Network with bonf correction in Dry season")
+            title = "Spearman's correlation based Network with bonf correction in Dry season",
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.ds'
+            )
