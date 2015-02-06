@@ -1,0 +1,538 @@
+This is XeTeX, Version 3.14159265-2.6-0.99991 (TeX Live 2014) (preloaded format=xelatex 2014.7.27)  5 FEB 2015 21:53
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**LabBook.tex
+(./LabBook.tex
+LaTeX2e <2014/05/01>
+Babel <3.9k> and hyphenation patterns for 78 languages loaded.
+(/usr/local/texlive/2014/texmf-dist/tex/latex/labbook/labbook.cls
+Invalid UTF-8 byte or sequence at line 9 replaced by U+FFFD.
+
+Document Class: labbook 2003/05/20 v1.1 LaTeX2e labbook document class
+(/usr/local/texlive/2014/texmf-dist/tex/latex/koma-script/scrbook.cls
+Document Class: scrbook 2013/12/19 v3.12 KOMA-Script document class (book)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/koma-script/scrkbase.sty
+Package: scrkbase 2013/12/19 v3.12 KOMA-Script package (KOMA-Script-dependent b
+asics and keyval usage)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/koma-script/scrbase.sty
+Package: scrbase 2013/12/19 v3.12 KOMA-Script package (KOMA-Script-independent 
+basics and keyval usage)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/koma-script/scrlfile.sty
+Package: scrlfile 2013/12/19 v3.12 KOMA-Script package (loading files)
+
+Package scrlfile, 2013/12/19 v3.12 KOMA-Script package (loading files)
+                  Copyright (C) Markus Kohm
+
+))) (/usr/local/texlive/2014/texmf-dist/tex/latex/koma-script/tocbasic.sty
+Package: tocbasic 2013/12/19 v3.12 KOMA-Script package (handling toc-files)
+)
+Package tocbasic Info: omitting babel extension for `toc'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `toc' on input line 117.
+Package tocbasic Info: omitting babel extension for `lof'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lof' on input line 118.
+Package tocbasic Info: omitting babel extension for `lot'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lot' on input line 119.
+Package tocbasic Info: defining new hook before heading of `' on input line 111
+8.
+
+
+Class scrbook Warning: You've used obsolete option `idxtotoc'.
+(scrbook)              Usage of this option indicates an old document and
+(scrbook)              is deprecated.
+(scrbook)              You should simply replace
+(scrbook)              usage of option `idxtotoc' by `index=totoc'.
+
+Class scrbook Info: Switching compatibility level to `first'.
+Class scrbook Info: You've used standard option `openany'.
+(scrbook)           This is correct!
+(scrbook)           Internally I'm using `open=any'.
+(scrbook)           If you'd like to set the option with \KOMAoptions,
+(scrbook)           you'd have to use `open=any' there
+(scrbook)           instead of `openany', too.
+Class scrbook Info: File `scrsize11pt.clo' used instead of
+(scrbook)           file `scrsize11.clo' to setup font sizes on input line 1655
+.
+(/usr/local/texlive/2014/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
+File: scrsize11pt.clo 2013/12/19 v3.12 KOMA-Script font size class option (11pt
+)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/koma-script/typearea.sty
+Package: typearea 2013/12/19 v3.12 KOMA-Script package (type area)
+
+Package typearea, 2013/12/19 v3.12 KOMA-Script package (type area)
+                  Copyright (C) Frank Neukam, 1992-1994
+                  Copyright (C) Markus Kohm, 1994-
+
+\ta@bcor=\skip41
+\ta@div=\count80
+\ta@hblk=\skip42
+\ta@vblk=\skip43
+\ta@temp=\skip44
+\footheight=\skip45
+Package typearea Info: These are the values describing the layout:
+(typearea)             DIV  = 10
+(typearea)             BCOR = 0.0pt
+(typearea)             \paperwidth      = 597.50793pt
+(typearea)              \textwidth      = 418.25555pt
+(typearea)              DIV departure   = -6%
+(typearea)              \evensidemargin = 47.2316pt
+(typearea)              \oddsidemargin  = -12.5192pt
+(typearea)             \paperheight     = 845.04694pt
+(typearea)              \textheight     = 595.80026pt
+(typearea)              \topmargin      = -25.16531pt
+(typearea)              \headheight     = 17.0pt
+(typearea)              \headsep        = 20.40001pt
+(typearea)              \topskip        = 11.0pt
+(typearea)              \footskip       = 47.6pt
+(typearea)              \baselineskip   = 13.6pt
+(typearea)              on input line 1330.
+)
+\c@part=\count81
+\c@chapter=\count82
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\c@subparagraph=\count87
+\abovecaptionskip=\skip46
+\belowcaptionskip=\skip47
+\c@pti@nb@sid@b@x=\box26
+\c@figure=\count88
+\c@table=\count89
+\bibindent=\dimen102
+) (/usr/local/texlive/2014/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+\@indexfile=\write3
+\openout3 = `LabBook.idx'.
+
+
+Writing index file LabBook.idx
+\FK@toks@=\toks15
+\c@fk@commasep@argnumber=\count90
+\c@fk@atdashsep@argnumber=\count91
+\c@labday=\count92
+\c@experiment=\count93
+\c@subexperiment=\count94
+) (/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is not detected.
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: pdfTeX >= 1.30 not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+)
+\@linkdim=\dimen103
+\Hy@linkcounter=\count95
+\Hy@pagecounter=\count96
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count97
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Option `pdfpagelabels' set `true' on input line 4319.
+Package hyperref Info: Option `plainpages' set `false' on input line 4319.
+Package hyperref Info: Option `colorlinks' set `true' on input line 4319.
+Package hyperref Info: Option `bookmarks' set `true' on input line 4319.
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing ON on input line 4461.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4688.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/backref.sty
+Package: backref 2012/07/25 v1.38 Bibliographical back referencing
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package rerunfilecheck Info: Feature \pdfmdfivesum is not available
+(rerunfilecheck)             (e.g. pdfTeX or LuaTeX with package `pdftexcmds').
+
+(rerunfilecheck)             Therefore file contents cannot be checked efficien
+tly
+(rerunfilecheck)             and the loading of the package is aborted.
+))
+\c@Hy@tempcnt=\count98
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen104
+\Fld@menulength=\count99
+\Field@Width=\dimen105
+\Fld@charsize=\dimen106
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing ON on input line 6308.
+Package hyperref Info: Link coloring ON on input line 6313.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count100
+\c@Item=\count101
+\c@Hfootnote=\count102
+)
+
+Package hyperref Message: Driver (autodetected): hxetex.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2012/11/06 v6.83m Hyperref driver for XeTeX
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2012/11/06 v6.83m Hyperref: PDF Unicode definition (HO)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/stringenc.sty
+Package: stringenc 2011/12/02 v1.10 Convert strings between diff. encodings (HO
+)
+)
+\pdfm@box=\box27
+\c@Hy@AnnotLevel=\count103
+\HyField@AnnotCount=\count104
+\Fld@listcount=\count105
+\c@bookmark@seq@number=\count106
+\Hy@SectionHShift=\skip48
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen107
+\lightrulewidth=\dimen108
+\cmidrulewidth=\dimen109
+\belowrulesep=\dimen110
+\belowbottomsep=\dimen111
+\aboverulesep=\dimen112
+\abovetopsep=\dimen113
+\cmidrulesep=\dimen114
+\cmidrulekern=\dimen115
+\defaultaddspace=\dimen116
+\@cmidla=\count107
+\@cmidlb=\count108
+\@aboverulesep=\dimen117
+\@belowrulesep=\dimen118
+\@thisruleclass=\count109
+\@lastruleclass=\count110
+\@thisrulewidth=\dimen119
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count111
+\float@exts=\toks16
+\float@box=\box28
+\@float@everytoks=\toks17
+\@floatcapt=\box29
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: xetex.def on input line 91.
+
+(/usr/local/texlive/2014/texmf-dist/tex/xelatex/xetex-def/xetex.def
+File: xetex.def 2014/04/28 v4.01 LaTeX color/graphics driver for XeTeX (RRM/JK)
+
+))
+\Gin@req@height=\dimen120
+\Gin@req@width=\dimen121
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count112
+\lst@gtempboxa=\box30
+\lst@token=\toks18
+\lst@length=\count113
+\lst@currlwidth=\dimen122
+\lst@column=\count114
+\lst@pos=\count115
+\lst@lostspace=\dimen123
+\lst@width=\dimen124
+\lst@newlines=\count116
+\lst@lineno=\count117
+\lst@maxwidth=\dimen125
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2014/03/04 1.5c (Carsten Heinz)
+\c@lstnumber=\count118
+\lst@skipnumbers=\count119
+\lst@framebox=\box31
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2014/03/04 1.5c listings configuration
+))
+Package: listings 2014/03/04 1.5c (Carsten Heinz)
+
+(/Users/iSith/Documents/R.github/network.analysis.skep1/doc/.texpadtmp/LabBook.
+aux)
+\openout1 = `LabBook.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+\AtBeginShipoutBox=\box32
+ (/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2014/04/23 v1.1a Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: xetex.def on input line 137.
+)
+Package hyperref Info: Link coloring ON on input line 88.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count120
+)
+LaTeX Info: Redefining \ref on input line 88.
+LaTeX Info: Redefining \pageref on input line 88.
+LaTeX Info: Redefining \nameref on input line 88.
+
+(/Users/iSith/Documents/R.github/network.analysis.skep1/doc/.texpadtmp/LabBook.
+out)
+(/Users/iSith/Documents/R.github/network.analysis.skep1/doc/.texpadtmp/LabBook.
+out)
+\@outlinefile=\write4
+\openout4 = `LabBook.out'.
+
+\c@lstlisting=\count121
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 105.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 105.
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/se-ascii-print.def
+File: se-ascii-print.def 2011/12/02 v1.10 stringenc: Printable ASCII characters
+
+)
+[1
+
+
+
+
+] [2
+
+]
+(/Users/iSith/Documents/R.github/network.analysis.skep1/doc/.texpadtmp/LabBook.
+toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
+)
+\tf@toc=\write5
+\openout5 = `LabBook.toc'.
+
+ [3
+
+] [4
+
+
+]
+
+Class scrbook Warning: Usage of deprecated font command `\tt'!
+(scrbook)              You should note, that in 1994 font command `\tt' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\tt' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrbook)              by `\normalfont \ttfamily ' on input line 131.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2014/03/04 1.5c listings language file
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2014/03/04 1.5c listings language file
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/listings/lstlang3.sty
+File: lstlang3.sty 2014/03/04 1.5c listings language file
+)
+
+Class scrbook Warning: Usage of deprecated font command `\tt'!
+(scrbook)              You should note, that in 1994 font command `\tt' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\tt' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrbook)              by `\normalfont \ttfamily ' on input line 133.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 136.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 153.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/it' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 153.
+
+
+Class scrbook Warning: Usage of deprecated font command `\tt'!
+(scrbook)              You should note, that in 1994 font command `\tt' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\tt' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrbook)              by `\normalfont \ttfamily ' on input line 176.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 176--177
+
+ []
+
+[1
+
+]
+Overfull \hbox (15.0791pt too wide) in paragraph at lines 180--181
+[][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (23.41246pt too wide) in paragraph at lines 188--189
+[][][][][][][][][][] 
+ []
+
+[2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3]
+(/Users/iSith/Documents/R.github/network.analysis.skep1/doc/.texpadtmp/LabBook.
+bbl
+(/Users/iSith/Documents/R.github/network.analysis.skep1/doc/.texpadtmp/LabBook.
+brf)
+\tf@brf=\write6
+\openout6 = `LabBook.brf'.
+
+ [4])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 383.
+ [5
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 383.
+
+(/Users/iSith/Documents/R.github/network.analysis.skep1/doc/.texpadtmp/LabBook.
+aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 383.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 383.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 383.
+ ) 
+Here is how much of TeX's memory you used:
+ 12021 strings out of 493734
+ 174505 string characters out of 6146348
+ 338033 words of memory out of 5000000
+ 15266 multiletter control sequences out of 15000+600000
+ 11112 words of font info for 39 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 41i,9n,55p,261b,1862s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on /Users/iSith/Documents/R.github/network.analysis.skep1/doc/.t
+expadtmp/LabBook.pdf (9 pages).

@@ -44,9 +44,9 @@ data <- transform(data,
                   cem = as.factor(cem),     
                   ast = as.factor(ast),       
                   nplsqm = as.numeric(nplsqm),
-                  ced = dmy(ced),       
+                  ced = dmy(ced),# Date data try to use as.Data(., format = '%d-%b-%y') it is not working
                   cedjul = as.numeric(cedjul),
-                  hd = dmy(hd),
+                  hd = dmy(hd),  # Date data
                   hdjul = as.numeric(hdjul),     
                   ccd = as.character(ccd),
                   cvr = as.character(cvr),

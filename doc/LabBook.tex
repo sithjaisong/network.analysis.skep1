@@ -1,0 +1,383 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Daily Laboratory Book
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original author:
+% Frank Kuster (http://www.ctan.org/tex-archive/macros/latex/contrib/labbook/)
+%
+% Important note:
+% This template requires the labbook.cls file to be in the same directory as the
+% .tex file. The labbook.cls file provides the necessary structure to create the
+% lab book.
+%
+% The \lipsum[#] commands throughout this template generate dummy text
+% to fill the template out. These commands should all be removed when 
+% writing lab book content.
+%
+% HOW TO USE THIS TEMPLATE 
+% Each day in the lab consists of three main things:
+%
+% 1. LABDAY: The first thing to put is the \labday{} command with a date in 
+% curly brackets, this will make a new page and put the date in big letters 
+% at the top.
+%
+% 2. EXPERIMENT: Next you need to specify what experiment(s) you are 
+% working on with an \experiment{} command with the experiment shorthand 
+% in the curly brackets. The experiment shorthand is defined in the 
+% 'DEFINITION OF EXPERIMENTS' section below, this means you can 
+% say \experiment{pcr} and the actual text written to the PDF will be what 
+% you set the 'pcr' experiment to be. If the experiment is a one off, you can 
+% just write it in the bracket without creating a shorthand. Note: if you don't 
+% want to have an experiment, just leave this out and it won't be printed.
+%
+% 3. CONTENT: Following the experiment is the content, i.e. what progress 
+% you made on the experiment that day.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[idxtotoc,hyperref,openany]{labbook} % 'openany' here removes the gap page between days, erase it to restore this gap; 'oneside' can also be added to remove the shift that odd pages have to the right for easier reading
+
+\usepackage[ 
+  backref=page,
+  pdfpagelabels=true,
+  plainpages=false,
+  colorlinks=true,
+  bookmarks=true,
+  pdfview=FitB]{hyperref} % Required for the hyperlinks within the PDF
+  
+\usepackage{booktabs} % Required for the top and bottom rules in the table
+\usepackage{float} % Required for specifying the exact location of a figure or table
+\usepackage{graphicx} % Required for including images
+\usepackage{listings}
+\lstset{% general command to set parameter(s)
+basicstyle=\small, % print whole listing small
+keywordstyle=\color{red}\itshape,
+% underlined bold black keywords
+commentstyle=\color{blue}, % white comments
+stringstyle=\ttfamily, % typewriter type for strings
+showstringspaces=false,
+numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, %
+frame=shadowbox,
+rulesepcolor=\color{black},
+,columns=fullflexible
+} %
+
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Command to make the lines in the title page
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+%----------------------------------------------------------------------------------------
+%	DEFINITION OF EXPERIMENTS
+%----------------------------------------------------------------------------------------
+
+\newexperiment{Load raw data}{This steps contain the process of cleaning the data}
+\newexperiment{Correct class of data}{This steps are for correct the class of each of variable}
+%\newexperiment{example3}{This is yet another example experiment}
+%\newexperiment{table}{This shows a sample table}
+%\newexperiment{shorthand}{Description of the experiment}
+
+%---------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\frontmatter % Use Roman numerals for page numbers
+\title{
+\begin{center}
+\HRule \\[0.4cm]
+{\Huge \bfseries The Lab note book for recode Network Analysis of Survey \\[0.5cm] \Large Ph.D. of Plant Pathology}\\[0.4cm] % Degree
+\HRule \\[1.5cm]
+\end{center}
+}
+\author{\Huge Sith Jaisong \\ \\ \LARGE s.jaisong@irri.org \\[2cm]} % Your name and email address
+\date{Beginning 5 February 2015} % Beginning date
+\maketitle
+\tableofcontents
+\mainmatter % Use Arabic numerals for page numbers
+
+%----------------------------------------------------------------------------------------
+%	LAB BOOK CONTENTS
+%----------------------------------------------------------------------------------------
+
+% Blank template to use for new days:
+
+%\labday{Day, Date Month Year}
+
+%\experiment{}
+
+%Text
+
+%-----------------------------------------
+
+%\experiment{}
+
+%Text
+
+%----------------------------------------------------------------------------------------
+\labday{Friday, 6 February 2015}
+
+\experiment{Raw data}
+
+The {\tt{R}} script is to load the raw data from folder.This script start using gdata package \cite{package:gdata}\newline
+\lstset{language=R}
+The {\tt{R}} script file:
+\begin{lstlisting}
+######################################
+#'title         : 1-raw.R
+#'date          : January, 2015
+#'purpose       : Load raw data from 
+#'                format
+#'writed by     : Sith Jaisong (s.jaisong@irri.org)
+#'contact       : International Rice Research Institute
+#'input         : the xts file                
+#'output        : data.frame and RData 
+######################################
+# The is the script for loading the raw data from local computer
+#------Load Library-----
+ library(gdata)
+#---- Set working directory 
+# set your working directory
+#wd = '~/Documents/R.github/network.analysis.skep1' 
+#setwd(wd)
+
+Filepath <- '~/Google Drive/1.SKEP1/SKEP1survey.xls'
+#-----Load raw data (Survey data in SKEP 1)-----
+
+data <- read.xls(Filepath, 
+                 sheet = 1, 
+                 header = TRUE,
+                 stringsAsFactor = FALSE)
+
+#------ Examine the raw data ------
+
+head(data) 
+str(data) # check the class of each variable
+summary(data)
+#---save data to R object ----
+
+save(data, file = "output/1-raw.skep1survey.RData")
+
+\end{lstlisting}
+
+%-----------------------------------------
+
+\experiment{correct class of data} 
+
+The {\tt{R}} script is to load the raw data from folder.This script start using plyr, dplyr, lubridate package \cite{package:plyr, package:dplyr, package:lubridate}\newline
+
+
+\begin{lstlisting}
+####################################################
+#'title         : 2-technically_correct
+#'date          : January, 2015
+#'purpose       :  
+#'writed by     : Sith Jaisong (s.jaisong@irri.org)
+#'contact       : International Rice Research Institute
+#'input         : import excel file from the shared files and delete the 
+#'output        : data frame and RData 
+#####################################################
+# 
+library(plyr)
+library(dplyr)
+library(lubridate)
+#-----Load file from output folder-----
+
+load(file = "output/1-raw.skep1survey.RData")
+
+
+#----- clean define the missing value -----
+
+data[data == "-"] <- NA # replace '-' with NA
+data[data == ""] <- NA # replace 'missing data' with NA
+
+#----- to lower variable names ----- 
+names(data) <- tolower(names(data))
+
+#----- This step is to seelect the numeric data set -----
+
+data <- transform(data, 
+                  phase = as.factor(phase),
+                  fno  = as.character(fno),
+                  identifier = as.character(identifier),
+                  country = as.factor(country),
+                  year = as.factor(year),
+                  season  = as.character(season),   
+                  lat = as.numeric(lat),
+                  long = as.numeric(long),      
+                  village = as.character(village), 
+                  fa = as.numeric(fa),
+                  fn = as.character(fn),
+                  lfm = as.character(lfm),
+                  pc = as.factor(pc),
+                  fp = as.character(fp),        
+                  cem = as.factor(cem),     
+                  ast = as.factor(ast),       
+                  nplsqm = as.numeric(nplsqm),
+                  ced = dmy(ced),       
+                  cedjul = as.numeric(cedjul),
+                  hd = dmy(hd),
+                  hdjul = as.numeric(hdjul),     
+                  ccd = as.character(ccd),
+                  cvr = as.character(cvr),
+                  vartype = as.character(vartype),
+                  varcoded = as.character(varcoded),
+                  fym = as.character(fym),
+                  fym.coded = as.character(fym.coded),
+                  n = as.numeric(n),
+                  p = as.numeric(p) ,
+                  k = as.numeric(k),
+                  mf = as.numeric(mf),        
+                  wcp = as.character(wcp),      
+                  mu = as.character(mu) ,     
+                  iu = as.numeric(iu),     
+                  hu = as.numeric(hu),      
+                  fu = as.numeric(fu),      
+                  cs  = as.factor(cs),      
+                  ldg  =  as.numeric(ldg),  
+                  yield = as.numeric(yield) ,
+                  dscum = as.numeric(dscum),   
+                  wecum = as.numeric(wecum),   
+                  ntmax = as.numeric(ntmax), 
+                  npmax = as.numeric(npmax),    
+                  nltmax = as.numeric(nltmax),  
+                  nlhmax = as.numeric(nltmax),  
+                  waa = as.numeric(waa),      
+                  wba = as.numeric(wba) ,   
+                  dhx =  as.numeric(dhx),  
+                  whx =  as.numeric(whx),     
+                  ssx  = as.numeric(ssx),  
+                  wma = as.numeric(wma), 
+                  lfa = as.numeric(lfa),
+                  lma = as.numeric(lma),   
+                  rha  = as.numeric(rha) ,
+                  thrx = as.numeric(thrx),    
+                  pmx = as.numeric(pmx),    
+                  defa  = as.numeric(defa) ,
+                  bphx = as.numeric(bphx),   
+                  wbpx = as.numeric(wbpx),    
+                  awx  = as.numeric(awx), 
+                  rbx =as.numeric(rbx),   
+                  rbbx = as.numeric(rbbx),  
+                  glhx  = as.numeric(glhx), 
+                  stbx=as.numeric(stbx),    
+                  rbpx = as.numeric(rbpx), 
+                  hbx= as.numeric(hbx),
+                  bbx = as.numeric(bbx),    
+                  blba = as.numeric(blba),    
+                  lba = as.numeric(lba),    
+                  bsa = as.numeric(bsa),    
+                  blsa = as.numeric(blsa),  
+                  nbsa = as.numeric(nbsa),  
+                  rsa  = as.numeric(rsa),   
+                  lsa = as.numeric(lsa),    
+                  shbx = as.numeric(shbx) ,  
+                  shrx = as.numeric(shrx),    
+                  srx= as.numeric(srx),    
+                  fsmx = as.numeric(fsmx),   
+                  nbx =  as.numeric(nbx),   
+                  dpx = as.numeric(dpx),    
+                  rtdx  = as.numeric(rtdx),  
+                  rsdx  = as.numeric(rsdx),
+                  gsdx  =as.numeric(gsdx),   
+                  rtx = as.numeric(rtx)
+) 
+
+save(data, file="output/2-correct.class.skep1survey.RData")
+
+\end{lstlisting}
+
+%\begin{figure}[H] % Example of including images
+%\begin{center}
+%\includegraphics[width=0.5\linewidth]{example_figure}
+%\end{center}
+%\caption{Example figure.}
+%\label{fig:example_figure}
+%\end{figure}
+
+%-----------------------------------------
+%\experiment{example3}
+%----------------------------------------------------------------------------------------
+%\labday{Friday, 26 March 2010}
+%\experiment{table}
+%\begin{table}[H]
+%\begin{tabular}{l l l}
+%\toprule
+%\textbf{Groups} & \textbf{Treatment X} & \textbf{Treatment Y} \\
+%\toprule
+%1 & 0.2 & 0.8\\
+%2 & 0.17 & 0.7\\
+%3 & 0.24 & 0.75\\
+%4 & 0.68 & 0.3\\
+%\bottomrule
+%\end{tabular}
+%\caption{The effects of treatments X and Y on the four groups studied.}
+%\label{tab:treatments_xy}
+%\end{table}
+%Table \ref{tab:treatments_xy} shows that groups 1-3 reacted similarly to the two treatments but group 4 showed a reversed reaction.
+%----------------------------------------------------------------------------------------
+%\labday{Saturday, 27 March 2010}
+%\experiment{Bulleted list example} % You don't need to make a \newexperiment if you only plan on referencing it once
+%This is a bulleted list:
+%\begin{itemize}
+%\item Item 1
+%\item Item 2
+%\item \ldots and so on
+%\end{itemize}
+%-----------------------------------------
+%\experiment{example}
+%-----------------------------------------
+%\experiment{example2}
+%----------------------------------------------------------------------------------------
+%	FORMULAE AND MEDIA RECIPES
+%----------------------------------------------------------------------------------------
+%\labday{} % We don't want a date here so we make the labday blank
+%\begin{center}
+%\HRule \\[0.4cm]
+%{\huge \textbf{Formulae and Media Recipes}}\\[0.4cm] % Heading
+%\HRule \\[1.5cm]
+%\end{center}
+%----------------------------------------------------------------------------------------
+%	MEDIA RECIPES
+%----------------------------------------------------------------------------------------
+%\newpage
+%\huge \textbf{Media} \\ \\
+%\normalsize \textbf{Media 1}\\
+%\begin{table}[H]
+%\begin{tabular}{l l l}
+%\toprule
+%\textbf{Compound} & \textbf{1L} & \textbf{0.5L}\\
+%\toprule
+%Compound 1 & 10g & 5g\\
+%Compound 2 & 20g & 10g\\
+%\bottomrule
+%\end{tabular}
+%\caption{Ingredients in Media 1.}
+%\label{tab:med1}
+%\end{table}
+%-----------------------------------------
+%\textbf{Media 2}\\ \\
+%Description
+%----------------------------------------------------------------------------------------
+%	FORMULAE
+%----------------------------------------------------------------------------------------
+%\newpage
+%\huge \textbf{Formulae} \\ \\
+%\normalsize \textbf{Formula 1 - Pythagorean theorem}\\ \\
+%$a^2 + b^2 = c^2$\\ \\
+%-----------------------------------------
+%\textbf{Formula X - Description}\\ \\
+%Formula
+%----------------------------------------------------------------------------------------
+\bibliographystyle{plain}
+\bibliography{LabBook}
+\end{document}

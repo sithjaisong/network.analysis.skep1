@@ -1,14 +1,14 @@
 ####################################################
 #'title         : 1-raw
 #'date          : January, 2015
-#'purpose       : Load raw data from 
-#'                format
+#'purpose       : Load raw data from xls format
+#'                
 #'writed by     : Sith Jaisong (s.jaisong@irri.org)
 #'contact       : International Rice Research Institute
-#'input         : the xts file                
+#'input         : the xls file                
 #'output        : data.frame and RData 
 #####################################################
-# The is the script of Exploratory Data Analysis
+# This is the script for loading the raw data
 #------Load Library-----
  library(gdata)
 #---- Set working directory 
@@ -32,6 +32,6 @@ data <- read.xls(Filepath,
 
 #---save data to R object ----
 
-save(data, file = "output/1-raw.skep1survey.RData")
+ save(data, file = "output/1-raw.skep1survey.RData")
 
 

@@ -1,0 +1,25 @@
+\begin{thebibliography}{1}
+
+\bibitem{package:lubridate}
+Garrett Grolemund and Hadley Wickham.
+\newblock Dates and times made easy with {lubridate}.
+\newblock {\em Journal of Statistical Software}, 40(3):1--25, 2011.
+
+\bibitem{package:gdata}
+Gregory~R. Warnes, Ben Bolker, Gregor Gorjanc, Gabor Grothendieck, Ales
+  Korosec, Thomas Lumley, Don MacQueen, Arni Magnusson, Jim Rogers, and
+  {others}.
+\newblock {\em gdata: Various R programming tools for data manipulation}, 2014.
+\newblock R package version 2.13.3.
+
+\bibitem{package:plyr}
+Hadley Wickham.
+\newblock The split-apply-combine strategy for data analysis.
+\newblock {\em Journal of Statistical Software}, 40(1):1--29, 2011.
+
+\bibitem{package:dplyr}
+Hadley Wickham and Romain Francois.
+\newblock {\em dplyr: A Grammar of Data Manipulation}, 2015.
+\newblock R package version 0.4.1.
+
+\end{thebibliography}
