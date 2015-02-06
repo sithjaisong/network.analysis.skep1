@@ -11,10 +11,10 @@
 # This is the script for loading the raw data
 #------Load Library-----
  library(gdata)
-#---- Set working directory 
-# set your working directory
-#wd = '~/Documents/R.github/network.analysis.skep1' 
-#setwd(wd)
+---- Set working directory 
+ set your working directory
+wd = '~/Documents/R.github/network.analysis.skep1' 
+setwd(wd)
 
 Filepath <- '~/Google Drive/1.SKEP1/SKEP1survey.xls'
 #-----Load raw data (Survey data in SKEP 1)-----

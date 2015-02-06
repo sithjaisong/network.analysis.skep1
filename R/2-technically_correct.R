@@ -7,14 +7,18 @@
 #'input         : import excel file from the shared files and delete the 
 #'output        : data frame and RData 
 #####################################################
-# 
+#---- Load library
 library(plyr)
 library(dplyr)
 library(lubridate)
+
+#---- Set working directory 
+# set your working directory
+wd = '~/Documents/R.github/network.analysis.skep1' 
+setwd(wd)
+
 #-----Load file from output folder-----
-
 load(file = "output/1-raw.skep1survey.RData")
-
 
 #----- clean define the missing value -----
 

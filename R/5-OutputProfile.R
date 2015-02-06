@@ -1,13 +1,19 @@
 ####################################################
-#'title         : 4-select_split
+#'title         : 5-OutputProfile
 #'date          : January, 2015
-#'purpose       :  
+#'purpose       : Select Injuries profiles
 #'writed by     : Sith Jaisong (s.jaisong@irri.org)
 #'contact       : International Rice Research Institute
 #'input         : import excel file from the shared files and delete the 
 #'output        : data frame and RData 
 #####################################################
 # 
+#---- Set working directory 
+# set your working directory
+wd = '~/Documents/R.github/network.analysis.skep1' 
+setwd(wd)
+#-----Load data from uptput folder
+load(file ="output/3-consistant.output.RData")
 
 #---- select the output profile which contain the insect pests and diseases ----
 OutputProfile <- data %>% 
@@ -62,4 +68,4 @@ OutputProfile <- data %>%
         rtx 
 ) 
 
-save(OutputProfile, file = 'output/4-select.split.RData')
+save(OutputProfile, file = 'output/5-OutputProfile.RData')

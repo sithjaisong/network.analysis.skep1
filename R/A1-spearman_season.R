@@ -1,7 +1,21 @@
+####################################################
+#'title         : A1-spearman_season
+#'date          : January, 2015
+#'purpose       : Select Injuries profiles
+#'writed by     : Sith Jaisong (s.jaisong@irri.org)
+#'contact       : International Rice Research Institute
+#'input         : import excel file from the shared files and delete the 
+#'output        : data frame and RData 
+#####################################################
 # generate the network model for the season
+#---Load Library
+
+library(qgraph)
 
 
-load(file = 'output/4-select.split.RData')
+load(file = 'output/5-OutputProfilet.RData')
+
+
 data <- OutputProfile
 
 #-- Wet season

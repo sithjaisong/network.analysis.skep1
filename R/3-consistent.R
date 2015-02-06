@@ -1,14 +1,19 @@
 ####################################################
 #'title         : 3-edit
 #'date          : January, 2015
-#'purpose       :  delete the outlier and the number that theya re not following the criteria that should be record
+#'purpose       : Convert ordonal data
 #'writed by     : Sith Jaisong (s.jaisong@irri.org)
 #'contact       : International Rice Research Institute
 #'input         : import excel file from the shared files and delete the 
 #'output        : data frame and RData 
 #####################################################
 # 
+#---- Set working directory 
+# set your working directory
+wd = '~/Documents/R.github/network.analysis.skep1' 
+setwd(wd)
 
+#----Load R.Data file from output folder
 load(file="output/2-correct.class.skep1survey.RData")
 # This step is to seelect the numeric data set se
 
@@ -18,4 +23,4 @@ levels(data$cs)[levels(data$cs) == "average"] <- 3
 levels(data$cs)[levels(data$cs) == "good"] <- 4
 levels(data$cs)[levels(data$cs) == "very good"] <- 5
 
-save(select.output, file ="3-select.output.RData")
+save(select.output, file ="output/3-consistent.output.RData")
