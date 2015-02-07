@@ -15,6 +15,7 @@ setwd(wd)
 
 #----Load R.Data file from output folder
 load(file="output/2-correct.class.skep1survey.RData")
+
 # This step is to seelect the numeric data set se
 
 levels(data$cs)[levels(data$cs) == "very poor"] <- 1
@@ -23,4 +24,4 @@ levels(data$cs)[levels(data$cs) == "average"] <- 3
 levels(data$cs)[levels(data$cs) == "good"] <- 4
 levels(data$cs)[levels(data$cs) == "very good"] <- 5
 
-save(select.output, file ="output/3-consistent.output.RData")
+save(data, file ="output/3-consistent.output.RData")

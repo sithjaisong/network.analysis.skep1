@@ -9,12 +9,17 @@
 #####################################################
 # generate the network model for the season
 #---Load Library
-
+library(plyr)
+library(dplyr)
 library(qgraph)
+# 
+#---- Set working directory 
+# set your working directory
+wd = '~/Documents/R.github/network.analysis.skep1' 
+setwd(wd)
+#-----Load data from uptput folder
 
-
-load(file = 'output/5-OutputProfilet.RData')
-
+load(file = "output/5-OutputProfile.RData")
 
 data <- OutputProfile
 
@@ -23,7 +28,7 @@ ws <- data %>%
         filter(season == "WS") %>%
         select(-c(country, season))
 
-ws <- ws[, apply(ws, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
+ws <- ws[,apply(ws, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
 ws<- ws[complete.cases(ws),] # exclude row which cantain NA
 
@@ -56,7 +61,7 @@ ds <- data %>%
         filter(season == "DS") %>%
         select(-c(country, season))
 
-ds <- ds[, apply(ds, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
+ds <- ds[,apply(ds, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
 ds<- ds[complete.cases(ds),] # exclude row which cantain NA
 

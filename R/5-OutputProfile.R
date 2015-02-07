@@ -7,13 +7,15 @@
 #'input         : import excel file from the shared files and delete the 
 #'output        : data frame and RData 
 #####################################################
-# 
+#---Load Library ----
+library(plyr)
+library(dplyr)
 #---- Set working directory 
 # set your working directory
 wd = '~/Documents/R.github/network.analysis.skep1' 
 setwd(wd)
 #-----Load data from uptput folder
-load(file ="output/3-consistant.output.RData")
+load(file ="output/3-consistent.output.RData")
 
 #---- select the output profile which contain the insect pests and diseases ----
 OutputProfile <- data %>% 
@@ -46,7 +48,7 @@ OutputProfile <- data %>%
         rbbx,  
         glhx, 
         stbx,
-        rbpx,  
+        #rbpx,  
         hbx,  
         bbx,    
         blba,    

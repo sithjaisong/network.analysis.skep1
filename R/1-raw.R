@@ -11,8 +11,8 @@
 # This is the script for loading the raw data
 #------Load Library-----
  library(gdata)
----- Set working directory 
- set your working directory
+#---- Set working directory 
+# set your working directory
 wd = '~/Documents/R.github/network.analysis.skep1' 
 setwd(wd)
 
