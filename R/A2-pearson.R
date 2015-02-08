@@ -14,7 +14,7 @@ library(fdrtool) # Local False Discovery Rates and Higher Criticism
 library(qgraph) # Network construct
 
 ######----Correlation matrix-----######
-# creat the correlation matrix
+# create the correlation matrix
 
 cor.test <- cor(selected.data, use = "everything", method = "pearson")
 
@@ -42,3 +42,6 @@ corrplot(cor(selected.data), order = "hclust", addrect = 5)
 qgraph(cor(dat.filted), 
        layout = "spring",
        title = "Pearson correlation based Network")
+
+# eos
+
