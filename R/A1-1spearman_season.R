@@ -9,8 +9,6 @@
 ##################End of Title##############################
 # generate the network model for the season
 #---Load Library ----
-library(plyr)
-library(dplyr)
 library(qgraph)
 # 
 #---- Set working directory -----
@@ -19,24 +17,16 @@ wd = '~/Documents/R.github/network.analysis.skep1'
 setwd(wd)
 #-----Load data from uotput folder ----
 
-load(file = "output/5-OutputProfile.RData")
+load(file = "output/5-1OutputProfile_subset.RData")
 
-data <- OutputProfile
 #-- all season all year ----
-all <- data %>% 
-        select(-c(country, season)) # select out the country and season column
-
-all <- all[,apply(all, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-all<- all[complete.cases(all),] # exclude row which cantain NA
-
 all.spear <- cor(all, method = "spearman")
 
 q.all.spear<- qgraph(all.spear,
             sampleSize = nrow(all),
-            graph = 'association',
+            graph = 'assosciation',
             #layout = "spring",
-            #minimum = "sig",
+            minimum = "sig",
             maximum = 0.6,
             # cut = 0.3 ,
             # threshold = "locfdr",
@@ -50,24 +40,16 @@ q.all.spear<- qgraph(all.spear,
             edge.label.cex = 0.5,
             layout = "spring",
             title = "Spearman's correlation based Network with bonf correction in South and South East Asia"
-            #filetype = 'pdf',
-            #filename ='figs/qgraph.spear.all'
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.all'
 )
 
 #-- Wet season ----
-ws <- data %>% 
-        filter(season == "WS") %>%
-        select(-c(country, season))
-
-ws <- ws[,apply(ws, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-ws<- ws[complete.cases(ws),] # exclude row which cantain NA
-
 ws.spear.cor <- cor(ws, method = "spearman")
 
 q.ws.spear<- qgraph(ws.spear.cor,
             sampleSize = nrow(ws),
-            graph = 'association',
+            graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
             # cut = 0.3 ,
@@ -86,21 +68,12 @@ q.ws.spear<- qgraph(ws.spear.cor,
             filename ='figs/qgraph.spear.ws'
             )
 
-#----------------------------Dry season---------------------
-
-ds <- data %>% 
-        filter(season == "DS") %>%
-        select(-c(country, season))
-
-ds <- ds[,apply(ds, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-ds<- ds[complete.cases(ds),] # exclude row which cantain NA
-
+#--Dry season-------
 ds.spear.cor <- cor(ds, method = "spearman")
 
 q.ds.spear <- qgraph(ds.spear.cor,
             sampleSize = nrow(ds),
-            graph = 'association',
+            graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
             # cut = 0.3 ,

@@ -19,21 +19,9 @@ wd = '~/Documents/R.github/network.analysis.skep1'
 setwd(wd)
 #-----Load data from uptput folder ----
 
-load(file = "output/5-OutputProfile.RData")
+load(file = "output/5-1OutputProfile_subset.RData")
 
-data <- OutputProfile
-
-#----network construction in each country ----
 #---- The Philippines n = 40 ----
-
-php <- data %>% 
-        filter( country == "PHL") %>%
-        select(-c(country, season))
-
-php <- php[,apply(php, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-php <- php[complete.cases(php),] # exclude row which cantain NA
-
 php.spear <- cor(php, method = "spearman")
 
 q.php.spear <- qgraph(php.spear,
@@ -58,15 +46,6 @@ q.php.spear <- qgraph(php.spear,
 )
 
 #--- India  N = 105 ---- 
-
-ind <- data %>% 
-        filter( country == "IND") %>%
-        select(-c(country, season))
-
-ind <- ind[,apply(ind, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-ind <- ind[complete.cases(ind),] # exclude row which cantain NA
-
 ind.spear <- cor(ind, method = "spearman")
 
 q.ind.spear <- qgraph(ind.spear,
@@ -91,14 +70,6 @@ q.ind.spear <- qgraph(ind.spear,
 )
 
 #--- Indonesia N= 100 -----
-idn <- data %>% 
-        filter( country == "IDN") %>%
-        select(-c(country, season))
-
-idn <- idn[,apply(idn, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-idn <- ind[complete.cases(idn),] # exclude row which cantain NA
-
 idn.spear <- cor(idn, method = "spearman")
 
 q.idn.spear <- qgraph(idn.spear,
@@ -123,15 +94,6 @@ q.idn.spear <- qgraph(idn.spear,
 )
 
 #---- Thailand n = 105 ----
-
-tha <- data %>% 
-        filter( country == "THA") %>%
-        select(-c(country, season))
-
-tha <- tha[,apply(tha, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-tha <- ind[complete.cases(tha),] # exclude row which cantain NA
-
 tha.spear <- cor(tha, method = "spearman")
 
 q.tha.spear <- qgraph(tha.spear,
@@ -156,14 +118,6 @@ q.tha.spear <- qgraph(tha.spear,
 )
 
 #--- Vietnam n = 105 ----
-vnm <- data %>% 
-        filter( country == "VNM") %>%
-        select(-c(country, season))
-
-vnm <- vnm[,apply(vnm, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
-
-vnm <- ind[complete.cases(vnm),] # exclude row which cantain NA
-
 vnm.spear <- cor(vnm, method = "spearman")
 
 q.vnm.spear <- qgraph(vnm.spear,
@@ -190,4 +144,4 @@ q.vnm.spear <- qgraph(vnm.spear,
 #---- Network perperties ----
 #clusterCoef(abs(vnm.spear.cor))
 
-save(php, idn, idn, tha, vnm, q.php.spear, q.idn.spear, q.idn.spear, q.tha.spear, q.vnm.spear, file = "output/A-1spear.country.RData")
+save(q.idn.spear, q.idn.spear, q.tha.spear, q.vnm.spear, file = "output/A-1spear.country.RData")
