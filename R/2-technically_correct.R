@@ -18,7 +18,7 @@ wd = '~/Documents/R.github/network.analysis.skep1'
 setwd(wd)
 
 #-----Load file from output folder-----
-load(file = "output/1-raw.skep1survey.RData")
+load(file = "output/1-raw.skep1survey.RData") # why not just source the initial script every time? I don't really like to do this unless I have no choice. 
 
 #----- clean define the missing value -----
 
@@ -118,3 +118,5 @@ data <- transform(data,
 ) 
 
 save(data, file="output/2-correct.class.skep1survey.RData")
+
+# eos

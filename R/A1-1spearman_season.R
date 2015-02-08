@@ -92,6 +92,7 @@ q.ds.spear <- qgraph(ds.spear.cor,
             filename ='figs/qgraph.spear.ds'
             )
 
+<<<<<<< HEAD:R/A1-1spearman_season.R
 save(all, ws, ds, q.all.spear, q.ds.spear, q.ws.spear, file = "output/A-1spear.all.season.RData")
 
 #--- compare graph ----
@@ -101,3 +102,7 @@ save(all, ws, ds, q.all.spear, q.ds.spear, q.ws.spear, file = "output/A-1spear.a
 #qgraph(PCorMat_FDR, layout = L, title = "Local FDR partial correlation network", maximum = 1, cut = 0.1, minimum = 0, esize = 20)
 
 # FDRnetwork is the function to adjust the 
+=======
+# eos
+
+>>>>>>> FETCH_HEAD:R/A1-spearman_season.R

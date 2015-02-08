@@ -21,6 +21,7 @@ library(flashClust)
 options(stringsAsFactors = FALSE) # data frame created after executing that line will not auto-convert to factors
 allowWGCNAThreads()
 
+<<<<<<< HEAD
 #--- set your working directory----
 wd = '~/Documents/R.github/network.analysis.skep1' 
 setwd(wd)
@@ -29,6 +30,10 @@ setwd(wd)
 load(file = "output/A-1spear.all.season.RData")
 load(file = "output/A-1spear.country.RData")
 # You will have all, ws, ds, php, ind, idn, tha and vnm in your environment
+=======
+######----Correlation matrix-----######
+# create the correlation matrix
+>>>>>>> FETCH_HEAD
 
 ######----Correlation matrix based on Pearson-----######
 # Pearson correlation is sensitive to the outliers, so we should delete them before we perform. I prefer to use  
@@ -95,3 +100,13 @@ qgraph(all.pearson, layout = L, title = "Correlation network",
 qgraph(all.pearson_FDR, layout = L, title = "Local FDR correlation network", 
        maximum = 1, cut = 0.1, minimum = 0, esize = 20)
 
+<<<<<<< HEAD
+=======
+###
+qgraph(cor(dat.filted), 
+       layout = "spring",
+       title = "Pearson correlation based Network")
+
+# eos
+
+>>>>>>> FETCH_HEAD

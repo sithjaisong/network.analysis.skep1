@@ -1,11 +1,11 @@
 ####################################################
 #'title         : 3-edit
 #'date          : January, 2015
-#'purpose       : Convert ordonal data
+#'purpose       : Convert ordinal data (to what?)
 #'writed by     : Sith Jaisong (s.jaisong@irri.org)
 #'contact       : International Rice Research Institute
 #'input         : import excel file from the shared files and delete the 
-#'output        : data frame and RData 
+#'output        : data frame and RData (of what? why?)
 #####################################################
 # 
 #---- Set working directory 
@@ -25,3 +25,6 @@ levels(data$cs)[levels(data$cs) == "good"] <- 4
 levels(data$cs)[levels(data$cs) == "very good"] <- 5
 
 save(data, file ="output/3-consistent.output.RData")
+
+# eos
+
