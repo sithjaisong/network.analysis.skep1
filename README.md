@@ -20,6 +20,10 @@ proj/
 - The ``` function ``` directory contains the functions 
 - The ``` output ``` directory contains the output which are the products from Rscripts, the products will be saved as the RData.  file.
 
+The ideas are behind this research
+1 I would constuct the **corelation based network**
+2 Another netwotk that I would build is **regression based network**. This model can show the dynamic of relationships quantitativly such as if variable A changed how then other variables  will change 
+
 
 
 

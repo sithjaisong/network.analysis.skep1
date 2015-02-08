@@ -1,5 +1,5 @@
 ##########################Title###############################################
-#'title         : Pearson correlation based Network 
+#'title         : Biweight Midcorrelation correlation based Network 
 #'date          : Feb, 2015
 #'purpose       : Visual the survey data to network model
 #'writed by     : Sith Jaisong (s.jaisong@irri.org)
@@ -30,9 +30,8 @@ load(file = "output/A-1spear.all.season.RData")
 load(file = "output/A-1spear.country.RData")
 # You will have all, ws, ds, php, ind, idn, tha and vnm in your environment
 
-######----Correlation matrix based on Pearson-----######
-# Pearson correlation is sensitive to the outliers, so we should delete them before we perform. I prefer to use  
-
+######----Correlation matrix based on Biweight-----######
+# Pearson correlation is sensitive to the outliers, so we should delete them before we perform. I prefer to use 
 clustaltree <- flashClust(dist(all), method = "average")
 
 plot(clustaltree, 
@@ -52,46 +51,29 @@ all <- all[keep.samples, ] # this data without outlier
 
 #--- Pearson Correaltion Network
 
-all.pearson <- cov(scale(all), method = "pearson", use = "pairwise.complete.obs")
+all.bicor <- bicor(all)
 #all.pearson <- cor(all, method = "pearson", use = "pairwise.complete.obs")
 #all.pearson <- cov(all, method = "pearson", use = "pairwise.complete.obs")
-q.all.pearson<- qgraph(all.pearson,
-                     sampleSize = nrow(all),
-                     graph = 'assosciation',
-                     minimum = "sig",
-                     maximum = 0.6,
-                     #cut = 0.1 ,
-                     # threshold = "locfdr",
-                     bonf = TRUE,
-                     #------ node
-                     vsize = c(1.5,8),
-                     #------edge
-                     borders = T,
-                     vTrans = 200,
-                     edge.labels = TRUE,
-                     edge.label.cex = 0.5,
-                     layout = "spring",
-                     filetype = 'pdf',
-                     filename ='figs/qgraph.pearson.all',
-                     title = "Pearson correlation based Network with bonf correction in South and South East Asia"
+q.all.bicor<- qgraph(all.bicor,
+                       sampleSize = nrow(all),
+                       graph = 'assosciation',
+                       minimum = "sig",
+                       maximum = 0.6,
+                       #cut = 0.1 ,
+                       # threshold = "locfdr",
+                       bonf = TRUE,
+                       #------ node
+                       vsize = c(1.5,8),
+                       #------edge
+                       borders = T,
+                       vTrans = 200,
+                       edge.labels = TRUE,
+                       edge.label.cex = 0.5,
+                       layout = "spring",
+                       filetype = 'pdf',
+                       filename ='figs/qgraph.bicor.all',
+                       title = "Biweight correlation based Network with bonf correction in South and South East Asia"
 )
-#---- Test Local FDR adjusted correlation network----
-# Run local FDR:
-#all.pearson_FDR <- FDRnetwork(all.pearson, method = "lfdr")
-all.pearson_FDR <- FDRnetwork(all.pearson, method = "pval")
-#all.pearson_FDR <- FDRnetwork(all.pearson, method = "qval")
 
-# Number of edges remaining:
-mean(all.pearson_FDR[upper.tri(all.pearson_FDR,diag=FALSE)]!=0)
 
-# None, so might use different criterion:
-all.pearson_FDR <- FDRnetwork(all.pearson, method = "pval")
-
-L <- averageLayout(all.pearson, all.pearson_FDR)
-
-layout(t(1:2))
-qgraph(all.pearson, layout = L, title = "Correlation network", 
-       maximum = 1, cut = 0.1, minimum = 0, esize = 20)
-qgraph(all.pearson_FDR, layout = L, title = "Local FDR correlation network", 
-       maximum = 1, cut = 0.1, minimum = 0, esize = 20)
 

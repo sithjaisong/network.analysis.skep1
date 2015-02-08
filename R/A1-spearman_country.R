@@ -1,14 +1,43 @@
-# network construction in each country
-# For the Philippines n = 40
-php.select.data <- select.output %>% 
-        filter( country == "PHL")
-php.select.data <- php.select.data[-c(1:2)]
-describe(php.select.data)
-c.php.select.data <- php.select.data[complete.cases(php.select.data),]
-c.php.select.data <- subset(c.php.select.data, select = -c(rbbx,stbx,rsdx))
-php.spear.cor <- cor(c.php.select.data[-1], method = "spearman")
-q5<- qgraph(php.spear.cor,
-            sampleSize = nrow(c.select.data),
+#################Title###############################
+#'title         : A1-spearman_season
+#'date          : January, 2015
+#'purpose       : Select Injuries profiles
+#'writed by     : Sith Jaisong (s.jaisong@irri.org)
+#'contact       : International Rice Research Institute
+#'input         : import excel file from the shared files and delete the 
+#'output        : data frame and RData 
+###################End of Title###########################
+# generate the network model for the season
+#---Load Library----
+library(plyr)
+library(dplyr)
+library(qgraph)
+
+#---- Set working directory ----
+# set your working directory
+wd = '~/Documents/R.github/network.analysis.skep1' 
+setwd(wd)
+#-----Load data from uptput folder ----
+
+load(file = "output/5-OutputProfile.RData")
+
+data <- OutputProfile
+
+#----network construction in each country ----
+#---- The Philippines n = 40 ----
+
+php <- data %>% 
+        filter( country == "PHL") %>%
+        select(-c(country, season))
+
+php <- php[,apply(php, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
+
+php <- php[complete.cases(php),] # exclude row which cantain NA
+
+php.spear <- cor(php, method = "spearman")
+
+q.php.spear <- qgraph(php.spear,
+            sampleSize = nrow(php),
             graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
@@ -23,19 +52,25 @@ q5<- qgraph(php.spear.cor,
             edge.labels = T,
             edge.label.cex = 0.5,
             layout = "spring",
-            title = "Spearman's correlation based Network with bonf correction in Philippines")
+            title = "Spearman's correlation based Network with bonf correction in Philippines",
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.php'
+)
 
-# For India 
-ind.select.data <- select.output %>% 
-        filter( country == "IND")
+#--- India  N = 105 ---- 
 
-ind.select.data <- ind.select.data[-c(1:2)]
-describe(ind.select.data)
-#c.ind.select.data <- ind.select.data[complete.cases(ind.select.data),]
-ind.select.data <- subset(ind.select.data, select = -c(ssx,awx,stbx,bsa,blsa,nbsa,rsa,lsa,shrx,srx,dpx,rtdx,rsdx))
-ind.spear.cor <- cor(ind.select.data[-1], method = "spearman")
-q6<- qgraph(ind.spear.cor,
-            sampleSize = nrow(c.select.data),
+ind <- data %>% 
+        filter( country == "IND") %>%
+        select(-c(country, season))
+
+ind <- ind[,apply(ind, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
+
+ind <- ind[complete.cases(ind),] # exclude row which cantain NA
+
+ind.spear <- cor(ind, method = "spearman")
+
+q.ind.spear <- qgraph(ind.spear,
+            sampleSize = nrow(ind),
             graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
@@ -50,23 +85,24 @@ q6<- qgraph(ind.spear.cor,
             edge.labels = T,
             edge.label.cex = 0.5,
             layout = "spring",
-            title = "Spearman's correlation based Network with bonf correction in India")
+            title = "Spearman's correlation based Network with bonf correction in India",
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.ind'
+)
 
+#--- Indonesia N= 100 -----
+idn <- data %>% 
+        filter( country == "IDN") %>%
+        select(-c(country, season))
 
+idn <- idn[,apply(idn, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
+idn <- ind[complete.cases(idn),] # exclude row which cantain NA
 
+idn.spear <- cor(idn, method = "spearman")
 
-# For Indonesia
-idn.select.data <- select.output %>% 
-        filter( country == "IDN")
-
-idn.select.data <- idn.select.data[-c(1:2)]
-describe(idn.select.data)
-idn.select.data <- idn.select.data[complete.cases(idn.select.data),]
-#idn.select.data <- subset(idn.select.data, select = -c(ssx,awx,stbx,bsa,blsa,nbsa,rsa,lsa,shrx,srx,dpx,rtdx,rsdx))
-idn.spear.cor <- cor(idn.select.data[-1], method = "spearman")
-q7<- qgraph(idn.spear.cor,
-            sampleSize = nrow(c.select.data),
+q.idn.spear <- qgraph(idn.spear,
+            sampleSize = nrow(idn),
             graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
@@ -81,20 +117,25 @@ q7<- qgraph(idn.spear.cor,
             edge.labels = T,
             edge.label.cex = 0.5,
             layout = "spring",
-            title = "Spearman's correlation based Network with bonf correction in Indonesia")
+            title = "Spearman's correlation based Network with bonf correction in Indonesia",
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.idn'
+)
 
+#---- Thailand n = 105 ----
 
-# For Thailand
-tha.select.data <- select.output %>% 
-        filter( country == "THA")
+tha <- data %>% 
+        filter( country == "THA") %>%
+        select(-c(country, season))
 
-tha.select.data <- tha.select.data[-c(1:2)]
-describe(tha.select.data)
-tha.select.data <- tha.select.data[complete.cases(tha.select.data),]
-tha.select.data <- subset(tha.select.data, select = -c(awx, rbbx, stbx, rtdx, rsdx))
-tha.spear.cor <- cor(tha.select.data[-1], method = "spearman")
-q8<- qgraph(tha.spear.cor,
-            sampleSize = nrow(c.select.data),
+tha <- tha[,apply(tha, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
+
+tha <- ind[complete.cases(tha),] # exclude row which cantain NA
+
+tha.spear <- cor(tha, method = "spearman")
+
+q.tha.spear <- qgraph(tha.spear,
+            sampleSize = nrow(tha),
             graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
@@ -109,20 +150,24 @@ q8<- qgraph(tha.spear.cor,
             edge.labels = T,
             edge.label.cex = 0.5,
             layout = "spring",
-            title = "Spearman's correlation based Network with bonf correction in Thailand")
+            title = "Spearman's correlation based Network with bonf correction in Thailad",
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.tha'
+)
 
+#--- Vietnam n = 105 ----
+vnm <- data %>% 
+        filter( country == "VNM") %>%
+        select(-c(country, season))
 
-# For Vietnam
-vnm.select.data <- select.output %>% 
-        filter( country == "VNM")
+vnm <- vnm[,apply(vnm, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
-vnm.select.data <- vnm.select.data[-c(1:2)]
-describe(vnm.select.data)
-vnm.select.data <- vnm.select.data[complete.cases(vnm.select.data),]
-vnm.select.data <- subset(vnm.select.data, select = -c(rbbx,stbx))
-vnm.spear.cor <- cor(vnm.select.data[-1], method = "spearman")
-q9<- qgraph(vnm.spear.cor,
-            sampleSize = nrow(c.select.data),
+vnm <- ind[complete.cases(vnm),] # exclude row which cantain NA
+
+vnm.spear <- cor(vnm, method = "spearman")
+
+q.vnm.spear <- qgraph(vnm.spear,
+            sampleSize = nrow(ind),
             graph = 'assosciation',
             minimum = "sig",
             maximum = 1,
@@ -137,7 +182,12 @@ q9<- qgraph(vnm.spear.cor,
             edge.labels = T,
             edge.label.cex = 0.5,
             layout = "spring",
-            title = "Spearman's correlation based Network with bonf correction in Vietnam")
-#---- result
-clusterCoef(abs(vnm.spear.cor))
+            title = "Spearman's correlation based Network with bonf correction in Vietnam",
+            filetype = 'pdf',
+            filename ='figs/qgraph.spear.vnm'
+)
 
+#---- Network perperties ----
+#clusterCoef(abs(vnm.spear.cor))
+
+save(php, idn, idn, tha, vnm, q.php.spear, q.idn.spear, q.idn.spear, q.tha.spear, q.vnm.spear, file = "output/A-1spear.country.RData")
