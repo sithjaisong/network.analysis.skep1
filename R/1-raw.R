@@ -1,23 +1,23 @@
-##############################################################################
+###########################Header##############################################
 # title         : 1-raw.R;
 # purpose       : Loads raw data for network analysis of Syngenta SKEP1 data;
 # producer      : prepared by S. Jaisong (s.jaisong@irri.org);
 # last update   : in Los Baños, Laguna, PHL, Jan 2015;
-# inputs        : which XLS file?;
-# outputs       : what data.frame and RData?;
+# inputs        : SKEP1survey.xls in google drive and in subfolder 1.SKEP1
+# outputs       : 1-raw.skep1survey.RData in output folder
 # remarks 1     : ;
 # remarks 2     : ;
-##############################################################################
+###############################End#############################################
 
 #### Load Library ####
  library(gdata)
 #### end load libraries ####
 
 #### Set working directory and filepath ####
-wd = "~/Documents/R.github/network.analysis.skep1" 
+wd <- "~/Documents/R.github/network.analysis.skep1" 
 setwd(wd)
 
-Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls"
+Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" # please check your file in shared google drive
 #### End directory and filepath ####
 
 
