@@ -1,34 +1,46 @@
-####################################################
+########################Header################################################
 #'title         : 5-OutputProfile
-#'date          : January, 2015
-#'purpose       : Select Injuries profiles
-#'writed by     : Sith Jaisong (s.jaisong@irri.org)
-#'contact       : International Rice Research Institute
-#'input         : import excel file from the shared files and delete the 
-#'output        : data frame and RData 
+# purpose       : subset the data: Output data (insect and disease);
+# producer      : prepared by S. Jaisong (s.jaisong@irri.org);
+# last update   : in Los Baños, Laguna, PHL, Jan 2015;
+# inputs        : 3-consistant.output.RData;
+# outputs       : 5-OutputProfile.RData;
+# remarks 1     : ;
+# remarks 2     : ;
 #####################################################
-#---Load Library ----
+#### Load Library ####
 library(plyr)
 library(dplyr)
-#---- Set working directory 
-# set your working directory
-wd = '~/Documents/R.github/network.analysis.skep1' 
-setwd(wd)
-#-----Load data from uptput folder
-load(file ="output/3-consistent.output.RData")
+#### End od loading libraries ####
 
-#---- select the output profile which contain the insect pests and diseases ----
+#### Set working directory ####
+# set your working directory
+wd <- '~/Documents/R.github/network.analysis.skep1' 
+setwd(wd)
+#### end of set wotking directory ####
+
+#### Load data from uptput folder ####
+load(file = "output/3-consistent.output.RData")
+#### end of load data from outout file ####
+
+### select the output profile which contain the insect pests and diseases ###
 OutputProfile <- data %>% 
-        select (#phase, # Phase No. #fno, 
-        country, #year, 
+        select (
+        #phase, 
+        #phase No. 
+        #fno, 
+        country, 
+        #year, 
         season,
         #cs,      
         ldg,  
-        # yield, #dscum, #wecum,   
+        #yield,
+        #dscum, 
+        #wecum,   
         #ntmax, 
-        #npmax ,    
-        #nltmax ,  
-        #nlhmax ,  
+        #npmax,    
+        #nltmax,  
+        #nlhmax,  
         #waa,      
         #wba,   
         dhx,  
@@ -56,9 +68,9 @@ OutputProfile <- data %>%
         bsa,    
         blsa,  
         nbsa,  
-        rsa ,   
+        rsa,   
         lsa,    
-        shbx ,  
+        shbx,  
         shrx,    
         srx,    
         fsmx,   
@@ -70,7 +82,10 @@ OutputProfile <- data %>%
         rtx 
 ) 
 
+#### end of subset dataset
+
+#### Save data to R object ####
 save(OutputProfile, file = 'output/5-OutputProfile.RData')
+#### end save data ####
 
 # eos
-
