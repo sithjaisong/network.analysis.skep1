@@ -1,38 +1,45 @@
-####################################################
-#'title         : 2-technically_correct
-#'date          : January, 2015
-#'purpose       :  
-#'writed by     : Sith Jaisong (s.jaisong@irri.org)
-#'contact       : International Rice Research Institute
-#'input         : import excel file from the shared files and delete the 
-#'output        : data frame and RData 
-#####################################################
-#---- Load library
+########################Header################################################
+# title         : 2-technically_correct
+# purpose       : clean the data and corect the type of data;
+# producer      : prepared by S. Jaisong (s.jaisong@irri.org);
+# last update   : in Los Baños, Laguna, PHL, Jan 2015;
+# inputs        : 1-raw.skep1survey.RData in output folder;
+# outputs       : 2-correct.class.skep1.survey.RData;
+# remarks 1     : ;
+# remarks 2     : ;
+########################End#################################################
+#### Load library ####
 library(plyr)
 library(dplyr)
 library(lubridate)
+#### End load libraries ####
 
-#---- Set working directory 
+##### Set working directory ####
 # set your working directory
-wd = '~/Documents/R.github/network.analysis.skep1' 
+wd <- '~/Documents/R.github/network.analysis.skep1' 
 setwd(wd)
+#### end setting directory ####
 
-#-----Load file from output folder-----
+#### Load file from output folder ####
 load(file = "output/1-raw.skep1survey.RData") # why not just source the initial script every time? I don't really like to do this unless I have no choice. 
+#### end load file from foler ####
 
-#----- clean define the missing value -----
-
+#### clean define the missing value ####
 data[data == "-"] <- NA # replace '-' with NA
 data[data == ""] <- NA # replace 'missing data' with NA
+#### end cleaning of data ####
 
-#----- to lower variable names ----- 
+
+
+#### to lower variable names ####
 names(data) <- tolower(names(data))
+#### end setting the varibales ####
 
-#----- This step is to seelect the numeric data set -----
+##### Type conversion ####
 
 data <- transform(data, 
                   phase = as.factor(phase),
-                  fno  = as.character(fno),
+                  fno = as.character(fno),
                   identifier = as.character(identifier),
                   country = as.factor(country),
                   year = as.factor(year),
@@ -50,7 +57,7 @@ data <- transform(data,
                   nplsqm = as.numeric(nplsqm),
                   ced = dmy(ced),# Date data try to use as.Data(., format = '%d-%b-%y') it is not working
                   cedjul = as.numeric(cedjul),
-                  hd = dmy(hd),  # Date data
+                  hd = dmy(hd), 
                   hdjul = as.numeric(hdjul),     
                   ccd = as.character(ccd),
                   cvr = as.character(cvr),
@@ -117,6 +124,10 @@ data <- transform(data,
                   rtx = as.numeric(rtx)
 ) 
 
-save(data, file="output/2-correct.class.skep1survey.RData")
+##### End of type convertion ####
+
+#### Save data to R object ####
+save(data, file = "output/2-correct.class.skep1survey.RData")
+#### end save data ####
 
 # eos
