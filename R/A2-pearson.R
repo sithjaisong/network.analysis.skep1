@@ -1,4 +1,4 @@
-##########################Title###############################################
+########################Header################################################
 #'title         : Pearson correlation based Network 
 #'date          : Feb, 2015
 #'purpose       : Visual the survey data to network model
@@ -6,7 +6,7 @@
 #'contact       : International Rice Research Institute
 #'input         : load from the output file 
 #'output        : Pearson correlation based network 
-########################End of Title############################################
+########################End##################################################
 #---- Read Me First ----
 # please check the package wiht bioconduct before 
 # if after you download WGCNA package, then it still can not run because it need other package form bioconduct 
@@ -100,13 +100,16 @@ qgraph(all.pearson, layout = L, title = "Correlation network",
 qgraph(all.pearson_FDR, layout = L, title = "Local FDR correlation network", 
        maximum = 1, cut = 0.1, minimum = 0, esize = 20)
 
-<<<<<<< HEAD
-=======
-###
+
 qgraph(cor(dat.filted), 
        layout = "spring",
        title = "Pearson correlation based Network")
 
+
+
+#### Save data to R object ####
+
+#### end save data ####
+
 # eos
 
->>>>>>> FETCH_HEAD

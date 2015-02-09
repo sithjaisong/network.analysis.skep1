@@ -1,4 +1,4 @@
-#################Title###############################
+########################Header################################################
 #'title         : A1-spearman_season
 #'date          : January, 2015
 #'purpose       : Select Injuries profiles
@@ -144,4 +144,6 @@ q.vnm.spear <- qgraph(vnm.spear,
 #---- Network perperties ----
 #clusterCoef(abs(vnm.spear.cor))
 
+#### Save data to R object ####
 save(q.idn.spear, q.idn.spear, q.tha.spear, q.vnm.spear, file = "output/A-1spear.country.RData")
+#### end save data ####
