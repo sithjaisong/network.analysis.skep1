@@ -19,11 +19,12 @@ setwd(wd)
 
 #####Load data from uptput folder ####
 
-load(file = "output/5-OutputProfile.RData")
+load(file = "output/5-1OutputProfile.RData")
 
 data <- OutputProfile
 
 ##### subset data ####
+
 #### all data ####
 all <- data %>% 
         select(-c(country, season)) # select out the country and season column
@@ -105,6 +106,6 @@ vnm <- ind[complete.cases(vnm),] # exclude row which cantain NA
 #### end Vietnam subset ####
 
 #### Save data to R object ####
-save(all, ws, ds, php, ind, idn, tha, vnm, file = "output/5-1OutputProfile_subset.RData")
+save(all, ws, ds, php, ind, idn, tha, vnm, file = "output/5-2OutputProfile_subset.RData")
 #### end save data ####
 #eos

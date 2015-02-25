@@ -1,0 +1,172 @@
+---
+title: "CNSur1"
+author: "Sith J"
+date: "February 24, 2558 BE"
+output: html_document
+---
+
+## Load library
+```{r library}
+library(plyr)
+library(dplyr)
+library(qgraph)
+library(WGCNA)
+```
+
+```{r}
+#### Set working directory and filepath ####
+wd <- "~/Documents/R.github/network.analysis.skep1" 
+setwd(wd)
+#### End directory and filepath ####
+```
+
+## Load data survey
+```{r data}
+Filepath <- "~/Documents/R.github/network.analysis.skep1/data/clean.data.csv" 
+data <- read.csv(Filepath, 
+                 header = TRUE,
+                 stringsAsFactor = FALSE)
+str(data)
+```
+
+## Select output profile
+```{r}
+OutputProfile <- data %>% 
+        select(
+        #phase, 
+        #phase No. 
+        #fno, 
+        country, 
+        #year, 
+        season,
+        #cs,      
+        ldg,  
+        #yield,
+        #dscum, 
+        #wecum,   
+        #ntmax, 
+        #npmax,    
+        #nltmax,  
+        #nlhmax,  
+        #waa,      
+        #wba,   
+        dhx,  
+        whx,     
+        ssx,  
+        wma, 
+        lfa,
+        lma,   
+        rha, 
+        thrx,    
+        pmx,    
+        defa,
+        bphx,   
+        wbpx,
+        awx, 
+        rbx,   
+        rbbx,  
+        glhx, 
+        stbx,
+        #rbpx,  
+        hbx,  
+        bbx,    
+        blba,    
+        lba,    
+        bsa,    
+        blsa,  
+        nbsa,  
+        rsa,   
+        lsa,    
+        shbx,  
+        shrx,    
+        srx,    
+        fsmx,   
+        nbx,   
+        dpx,    
+        rtdx,  
+        rsdx,
+        gsdx,   
+        rtx 
+) 
+```
+
+```{r, fig.height = 8, fig.width = 8}
+data <- OutputProfile
+all <- data %>% 
+        select(-c(country, season)) # select out the country and season column
+
+all <- all[,apply(all, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
+
+all<- all[complete.cases(all),] # exclude row which cantain NA
+#### Spear's man correaltion network of SKEP1 ####
+all.spear <- cor(all, method = "spearman")
+all.pear <- cor(all, method = "pearson")
+all.bicor <- bicor(all)
+
+L <- averageLayout(all.spear, all.pear, all.bicor)
+layout(matrix(c(0,1,2,3), 2, 2, byrow = TRUE))
+qgraph(all.spear,
+            sampleSize = nrow(all),
+            graph = 'assosciation',
+            layout = L,
+            minimum = "sig",
+            maximum = 0.6,
+            # cut = 0.3 ,
+            # threshold = "locfdr",
+            bonf = TRUE,
+            #------ node
+            vsize = c(1.5,8),
+            #------edge
+            borders = FALSE,
+            vTrans = 200,
+            edge.labels = TRUE,
+            edge.label.cex = 0.5,
+            layout = "spring",
+            #filetype = 'pdf',
+            #filename ='figs/qgraph.spear.all',
+            title = "Spearman's correlation "
+)
+qgraph(all.pear,
+            sampleSize = nrow(all),
+            graph = 'assosciation',
+            layout = L,
+            minimum = "sig",
+            maximum = 0.6,
+            # cut = 0.3 ,
+            # threshold = "locfdr",
+            bonf = TRUE,
+            #------ node
+            vsize = c(1.5,8),
+            #------edge
+            borders = FALSE,
+            vTrans = 200,
+            edge.labels = TRUE,
+            edge.label.cex = 0.5,
+            layout = "spring",
+            #filetype = 'pdf',
+            #filename ='figs/qgraph.spear.all',
+            title = "Pearson's correlation"
+)
+qgraph(all.bicor,
+            sampleSize = nrow(all),
+            graph = 'assosciation',
+            layout = L,
+            minimum = "sig",
+            maximum = 0.6,
+            # cut = 0.3 ,
+            # threshold = "locfdr",
+            bonf = TRUE,
+            #------ node
+            vsize = c(1.5,8),
+            #------edge
+            borders = FALSE,
+            vTrans = 200,
+            edge.labels = TRUE,
+            edge.label.cex = 0.5,
+            layout = "spring",
+            #filetype = 'pdf',
+            #filename ='figs/qgraph.spear.all',
+            title = "Biweight Midcorrelation"
+       )
+#### end of Spear's man correaltion network of SKEP1 ####
+```

@@ -54,8 +54,6 @@ levels(data$cs)[levels(data$cs) == "poor"] <- 2
 levels(data$cs)[levels(data$cs) == "average"] <- 3
 levels(data$cs)[levels(data$cs) == "good"] <- 4
 levels(data$cs)[levels(data$cs) == "very good"] <- 5
-
-
 #### end of recoding the factor ####
 
 

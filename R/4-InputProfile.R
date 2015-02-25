@@ -25,13 +25,14 @@ load(file = "output/3-2consistent.output.RData")
 
 ### select the output profile which contain the insect pests and diseases ###
 InputProfile <- data %>% 
-        select (fno, 
-                country, 
+        select (country, 
                 year, 
                 season,
                 pc,
-                cem,ast,nplsqm,
-                ccd,
+                cem,
+                #ast,
+                #nplsqm,
+                #ccd,
                 vartype,
                 fym,
                 n,
@@ -43,11 +44,10 @@ InputProfile <- data %>%
                 hu,
                 fu,
                 cs,      
-                ldg,  
-                yield,
+                #ldg,  
+                #yield,
                 dscum, 
-                wecum,   
-                ntmax
+                wecum   
                 ) 
 
 #### end of subset dataset
