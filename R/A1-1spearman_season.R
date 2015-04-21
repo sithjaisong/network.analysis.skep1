@@ -45,6 +45,36 @@ q.all.spear<- qgraph(all.spear,
 )
 #### end of Spear's man correaltion network of SKEP1 ####
 
+##### Kendall Correlation #####
+all.kend <- cor(all, method = "kendall", use = "pairwise") 
+
+q.all.kendall <- 
+        
+        qgraph(all.kend,
+                     sampleSize = nrow(all),
+                     graph = 'assosciation',
+                     #layout = "spring",
+                     minimum = "sig",
+                     maximum = 0.6,
+                     # cut = 0.3 ,
+                     # threshold = "locfdr",
+                     bonf = TRUE,
+                     #------ node
+                     vsize = c(1.5,8),
+                     #------edge
+                     borders = FALSE,
+                     vTrans = 200,
+                     edge.labels = TRUE,
+                     edge.label.cex = 0.5,
+                     layout = "spring",
+                     title = "Kendall's correlation based Network with bonf correction in South and South East Asia"
+                    # filetype = 'pdf',
+                    # filename ='figs/qgraph.kend.all'
+)
+
+####
+
+
 #### Spear's man correaltion network of Wet season ####
 # construc the correlation network by spear's man correlation
 # and select out the edges that show unsig by apply the bonferinr adjectment
