@@ -162,14 +162,14 @@ layout(matrix(c(1,2,3,4), 2, 2, byrow = TRUE))
 
 diag(all.spearman) <- 0
 q.spearman <- qgraph(
-        all.spearman, 
+                     all.spearman, 
                      layout = "spring", 
                      threshold = 0.20,
                      cut = 0.3,
                      maximum = 1,
-                     #sampleSize = nrow(all),
-                     #minimum = "sig", 
-                     #groups = injuries, 
+                     sampleSize = nrow(all),
+                     minimum = "sig", 
+                     groups = injuries, 
                      color = c("skyblue", "wheat"),
                      vsize = 5, 
                      line = 3,
@@ -179,9 +179,10 @@ q.spearman <- qgraph(
                      legend = FALSE,
                      vTrans = 200,
                      #bonf = TRUE,
-                     filetype = "jpg",
-                     filename = "figs/APPSnetwork5"
-                #title = "Spearman"
+                     #FDRcutoff = TRUE,
+                     #filetype = "jpg",
+                     #filename = "figs/APPSnetwork5"
+                title = "Spearman with FDR"
                      )
 centralityPlot(all.spearman)
 clusteringPlot(all.spearman)
