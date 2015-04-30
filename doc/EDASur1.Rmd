@@ -12,6 +12,7 @@ output:
 ```{r library}
 #### Load Library ####
 library(gdata) # load xls file
+library(readxl)
 library(plyr) 
 library(dplyr)
 library(reshape)
@@ -24,7 +25,8 @@ library(ggplot2)
 ## Load data
 ```{r}
 #### Set working directory and filepath ####
-wd <- "~/Documents/R.github/network.analysis.skep1" 
+#wd <- "~/Documents/R.github/network.analysis.skep1" 
+wd <- 'C:/Users/sjaisong/Documents/GitHub/network.analysis.skep1'
 setwd(wd)
 #### End directory and filepath ####
 ```
@@ -32,12 +34,12 @@ setwd(wd)
 
 ```{r}
 ##### Load raw data (Survey data in SKEP 1) ####
-Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" 
+#Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" 
+Filepath <- "E:/Google Drive/1.SKEP1/SKEP1survey.xls" 
 # please check your file in shared google drive
-data <- read.xls(Filepath, 
-                 sheet = 1, 
-                 header = TRUE,
-                 stringsAsFactor = FALSE)
+data <- read_excel(Filepath, 
+                 sheet = 1
+                 )
 #### End load raw data ####
 ```
 
@@ -60,6 +62,7 @@ data[data == ""] <- NA # replace 'missing data' with NA
 #### to lower variable names ####
 names(data) <- tolower(names(data))
 #### end setting the varibales ####
+data$fymcode
 ```
 
 ```{r}
@@ -90,7 +93,7 @@ data <- transform(data,
                   vartype = as.factor(vartype),
                   varcoded = as.factor(varcoded),
                   fym = as.character(fym),
-                  fym.coded = as.factor(fym.coded),
+                  fymcoded = as.factor(fymcoded),
                   n = as.numeric(n),
                   p = as.numeric(p) ,
                   k = as.numeric(k),

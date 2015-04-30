@@ -27,8 +27,8 @@ library(RColorBrewer)
 library(pheatmap)
 #---- Set working directory ----
 # set your working directory
-wd <- '~/Documents/R.github/network.analysis.skep1'  # for Mac
-# wd <- '' # for window
+#wd <- '~/Documents/R.github/network.analysis.skep1'  # for Mac
+wd <- 'C:/Users/sjaisong/Documents/GitHub/network.analysis.skep1' # for window
 
 setwd(wd)
 #-----Load data from uptput folder ----
@@ -48,12 +48,19 @@ load(file = "output/5-1OutputProfile_subset.RData")
 
 ##### Remove two variables that are not related to the injuries profiles
 all$ldg <- NULL
+
 row.names(all) <- NULL
 
-colnames(all) <- c("DH", "WH", "SS", "WM", "LF", "DEF", "BPH", "WBP",  "AM" , "RB", "RBB", "GLH" ,"STB", "BLB", "LB"  ,"BS" , "BLS", "NBS" ,"RS",  "LS"  ,"SHB", "SHR", "SR",  "FSM", "NB" , "DP", "RTD", "RSD" ,"RT")
+colnames(all) <- c("DH", "WH", "SS", "WM", "LF", "DEF", "BPH", "WBP",  "AM" ,
+                   "RB", "RBB", "GLH" ,"STB", "BLB", "LB"  ,"BS" , "BLS",
+                   "NBS" ,"RS",  "LS"  ,"SHB", "SHR", "SR",  "FSM", "NB" ,
+                   "DP", "RTD", "RSD" ,"RT")
+
 name <- colnames(all)
+
 ##### EDS #####
 #source("function/pairs.panels.R")
+
 #pairs.panels(all)
 
 ##### Technical correction #####
@@ -61,9 +68,13 @@ name <- colnames(all)
 
 ##### construct the correlation matrix ######
 all.pearson <- cor(all, method = "pearson", use = "pairwise") # pearson correlation
+
 all.spearman <- cor(all, method = "spearman", use = "pairwise") # spearman correlation
+
 all.kendall <- cor(all, method = "kendall", use = "pairwise")# kendall correlation
+
 all.biweight <- bicor(all, use = "pairwise") # Biweight Midcorrelation from WGCNA package
+
 #all.hoeffd <- ifelse(hoeffd(data.matrix(all))$P <= 0.05, hoeffd(data.matrix(all))$D, 0)
 #diag(all.hoeffd) <- 1        
 #dcor(all) # this distence correlation is not succesful 
@@ -122,6 +133,20 @@ colnames(df.biweight.cor.val) <- "Biweight"
 # colnames(df.MI.cor.val) <- "MI"
 
 
+#===================================================
+# Check the distribution of the correlation in the correlation matrix
+#
+#===================================================
+
+#We do not neet the 1 in correlation matrix
+remove <- 1
+vCorPear <- as.vector(all.pearson)
+noO <-vCorPear[!vCorPear %in% 1]
+histogram(noO)
+# Pearson's correlation coefficents of survey data are around tendding on the negative values.
+histogram( as.vector(all.spearman))
+# the distribution of correlation coefficients are scatttered around the -5 to 5 
+
 #====================================================
 ##### Combine correlation value of each method ######
 #===================================================
@@ -164,11 +189,11 @@ diag(all.spearman) <- 0
 q.spearman <- qgraph(
         all.spearman, 
                      layout = "spring", 
-                     threshold = 0.20,
+                     #threshold = 0.20,
                      cut = 0.3,
-                     maximum = 1,
-                     #sampleSize = nrow(all),
-                     #minimum = "sig", 
+                     #maximum = 1,
+                     sampleSize = nrow(all),
+                     minimum = "sig", 
                      #groups = injuries, 
                      color = c("skyblue", "wheat"),
                      vsize = 5, 
@@ -178,11 +203,39 @@ q.spearman <- qgraph(
                      borders = FALSE,
                      legend = FALSE,
                      vTrans = 200,
-                     #bonf = TRUE,
-                     filetype = "jpg",
-                     filename = "figs/APPSnetwork5"
-                #title = "Spearman"
+                     # bonf = TRUE,
+                    # filetype = "jpg",
+                     #filename = "figs/APPSnetwork5"
+                title = "Spearman"
                      )
+
+
+cluster.mem <- list( one <- c(6,9,10, 11,15, 16, 26, 27, 28, 29),
+                     two <- c(1,2,5,8,11,12,13,21))
+
+ qgraph(
+        all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        cut = 0.3,
+        maximum = 1,
+        sampleSize = nrow(all),
+        minimum = "sig", 
+        groups = cluster.mem, 
+        color = c("skyblue", "wheat", "red"),
+        vsize = 5, 
+        line = 3,
+        posCol = "forestgreen",
+        negCol = "firebrick3",
+        borders = FALSE,
+        legend = FALSE,
+        vTrans = 200,
+        #bonf = TRUE,
+        # filetype = "jpg",
+        #filename = "figs/APPSnetwork5"
+        title = "Spearman"
+)
+
 centralityPlot(all.spearman)
 clusteringPlot(all.spearman)
 powers <- c(c(1:10), seq(from = 12, to=20 , by =2))

@@ -1,3 +1,4 @@
+library(ggplot2)
 
 load(file = "output/3-2consistent.output.RData")
 ##### ggplot theme "science magazine
