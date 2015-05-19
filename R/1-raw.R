@@ -10,21 +10,21 @@
 ###############################End#############################################
 
 #### Load Library ####
- library(gdata)
+library(gdata) # package for reading exel file
 #### end load libraries ####
 
 #### Set working directory and filepath ####
-wd <- "~/Documents/R.github/network.analysis.skep1" 
+wd <- "~/Documents/R.github/network.analysis.skep1" # call for the working directory
 setwd(wd)
+
 #### End directory and filepath ####
 
 
 ##### Load raw data (Survey data in SKEP 1) ####
 Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" # please check your file in shared google drive
 data <- read.xls(Filepath, 
-                 sheet = 1, 
-                 header = TRUE,
-                 stringsAsFactor = FALSE)
+                 sheet = 1 
+                 )
 #### End load raw data ####
 
 #### Examine the raw data ####
