@@ -15,7 +15,8 @@ library(WGCNA)
 
 ```{r}
 #### Set working directory and filepath ####
-wd <- "~/Documents/R.github/network.analysis.skep1" 
+wd <- "~/Documents/R.github/network.analysis.skep1"  # For Mac
+wd <- "/Documents/R.github/network"
 setwd(wd)
 #### End directory and filepath ####
 ```
