@@ -183,6 +183,6 @@ levels(data$cs)[levels(data$cs) == "good"] <- 4
 levels(data$cs)[levels(data$cs) == "very good"] <- 5
 
 # save single data ------------
-save(all, file = "output/single.data.Rdata ")
+save(data, file = "output/single.data.Rdata ")
 
 #eos -----------
