@@ -1,0 +1,668 @@
+---
+title: "Co-occurence Network of pests and disease"
+author: "Sith J"
+date: "June 23, 2015"
+output: html_document
+---
+Co-occurence patterns are used in eological fields of science to reveal interations between organisms. In this study, I applied this idea to explore the patterns of insect damages and diseases in which I observed in the rice farmer's fileds across countries. We scoped thoses areas espectilly at lowland rice area. We collected incidence of damages caused by insect pests and disease symptoms.
+
+```{r eval = TRUE, echo = TRUE}
+#-- Here are the package used for analyse the survey data.
+require(plyr)
+require(dplyr)
+require(reshape)
+require(reshape2)
+require(WGCNA)
+require(qgraph)
+require(igraph)
+require(ggplot2)
+require(gridExtra)
+require(cowplot)
+require(RColorBrewer)
+require(htmlwidgets)
+require(pheatmap)
+require(lattice)
+```
+
+Looking at the survey data
+
+```{r  echo = FALSE}
+# set your working directory
+#wd <- '~/Documents/R.github/network.analysis.skep1'  # for Mac
+wd <- 'C:/Users/sjaisong/Documents/GitHub/network.analysis.skep1' # for window
+setwd(wd)
+#-----Load data from uptput folder ----
+load(file = "output/5-1OutputProfile_subset.RData")
+all$ldg <- NULL
+head(all)
+```
+Survey data set is composed of 420 farmer's fileds and 29 variables.
+```{r echo=FALSE}
+dim(all)
+```
+
+What did we observe? 
+Our variables interesting are  "dhx" (deadhead) "whx" (whitehead)  "ssx" (silvershoot) "wma" (whorl maggot) "lfa" (leaffolder)  "defa" (defoliators) "bphx" (brown plant hopper) "wbpx" (white backed plant hopper) "awx" (army worm) "rbx" (rice bug)  "rbbx" (rice black bug) "glhx" (green leaf hopper) "stbx" (singk bug) "blba" (bacterial leaf blight) "lba" (leaf blast) "bsa" (brown spot) "blsa" (bacterial leaf streak) "nbsa" (narrow brown spot) "rsa"  (red stripe) "lsa" (leaf scald) "shbx" (shealth blight) "shrx" (shealth rot) "srx" (stem rot) "fsmx" (false smut) "nbx" (neck blast) "dpx" (dirty panicle) "rtdx" (rice tugro disease) "rsdx" (ragged stund disease) "rtx" (rat damages) 
+```{r echo=FALSE}
+names(all)
+abbre <- c("DH", "WH", "SS", "WM", "LF", "DEF", "BPH", "WPH", "AM", "RB", "RBB", "GLH", "STB", "BLB",  "LB", "BS", "BLS", "NBS", "RS", "LS", "SHB", "SHR", "SR", "FSM", "NB", "DP", "RTD", "RSD", "RD")
+names(all) <-abbre
+
+```
+
+```{r fig.width=7, fig.height=7, fig.align='center'}
+m.all <- melt(all)
+varnames <- colnames(all)
+i <- 1
+out <- NULL
+for(i in 1:length(varnames)) {
+        gdata <- m.all %>% filter(variable == varnames[i])
+        p <- ggplot(gdata, aes(x = value)) + 
+        geom_histogram(stat = "bin") + ggtitle(paste("Histogram of", varnames[i], sep = " "))
+        dev.new()
+        print(p) 
+        out[[i]] <- p
+}
+
+grid.arrange(out[[1]],
+             out[[2]],
+             out[[3]],
+             out[[4]],
+             out[[5]],
+             out[[6]],
+             out[[7]],
+             out[[8]],
+             out[[9]],
+             out[[10]],
+             out[[11]],
+             out[[12]],
+             out[[13]],
+             out[[14]],
+             out[[15]],
+             out[[16]],
+             out[[17]],
+             out[[18]],
+             out[[19]],
+             out[[20]],
+             out[[21]],
+             out[[22]],
+             out[[23]],
+             out[[24]],
+             out[[25]],
+             out[[26]],
+             out[[26]],
+             out[[28]],
+             out[[29]],
+             nrow = 5
+        )
+
+```
+
+```{r}
+df <- lapply(all, shapiro.test)
+df
+```
+
+
+```{r}
+##### construct the correlation matrix ######
+
+all.pearson <- cor(all, method = "pearson", use = "pairwise") # pearson correlation
+
+all.spearman <- cor(all, method = "spearman", use = "pairwise") # spearman correlation
+
+all.kendall <- cor(all, method = "kendall", use = "pairwise")# kendall correlation
+
+all.biweight <- bicor(all, use = "pairwise") # Biweight Midcorrelation from WGCNA package
+
+
+#===========================================
+##### Transform the correlation matrix #####
+#============================================
+
+# change from matrix to data frame, and extract the value of each correlation approach
+
+### Peason correlation
+df.pearson <- as.data.frame(all.pearson)
+df.pearson.corval <- df.pearson[1]
+colnames(df.pearson.corval) <- "Pearson"
+
+### Spearman correlation
+
+df.spear <- as.data.frame(all.spearman)
+df.spear.corval <- df.spear[1]
+colnames(df.spear.corval) <- "Spearman"
+
+### Kendall correlation
+
+df.kendall <- as.data.frame(all.kendall)
+df.kendall.corval <- df.kendall[1]
+colnames(df.kendall.corval) <- "Kendall"
+
+### Biweight Midcorrelation
+df.biweight <- as.data.frame(all.biweight)
+df.biweight.cor.val <- df.biweight[1]
+colnames(df.biweight.cor.val) <- "Biweight"
+
+#====================================================
+##### Combine correlation value of each method ######
+#===================================================
+# will add more correlation
+bind.cor <- cbind(df.pearson.corval,
+                  df.spear.corval,
+                  df.kendall.corval,
+                  df.biweight.cor.val)
+
+##### Cluster Analysis and correlation matrix #####
+cor.of.cor <- cor(bind.cor)
+pheatmap(cor.of.cor, cellwidth = 50, cellheight = 50, fontsize = 16)
+
+#===================================================
+# Check the distribution of the correlation of each measures
+#===================================================
+# data <- all
+# 
+# options(warnings=-1)
+# 
+# results <- matrix(nrow = 0, ncol = 4)
+# 
+# for(a in 1:length(names(all))){
+# 		#every species will be compared to every other species, so there has to be another loop that iterates down the rest of the columns
+# 		for(b in (a+1):length(names(all))){
+# 		        
+# 		       
+# 			#summing the abundances of species of the columns that will be compared
+# 			species1.ab <- sum(data[,a])
+# 			species2.ab <- sum(data[,b])
+# 		
+# 			
+# 			if(species1.ab > 1 & species2.ab > 1){
+# 				test <- cor.test(data[,a], data[,b], method = "spearman", na.action = na.rm)
+# 				rho <- test$estimate
+# 				p.value <- test$p.value
+# 			
+# 			}	
+# 			
+# 			new.row <- c(names(data)[a], names(data)[b], rho, p.value)
+# 			results <- rbind(results, new.row)			
+# 		}
+# 
+# }
+# 
+# results <- data.frame(data.matrix(results))
+# 
+# names(results) <- c("var1","var2","rho","p.value")
+# 
+# head(results)
+
+# We do not neet the 1 in correlation matrix
+remove <- 1
+all.pearson
+vCorPear <- as.vector(all.pearson)
+noO <-vCorPear[!vCorPear %in% 1]
+histogram(noO)
+
+# Pearson's correlation coefficents of survey data are around tendding on the negative values.
+diag(all.spearman) <- 0
+
+histogram(as.vector(all.spearman))
+# the distribution of correlation coefficients are scatttered around the -5 to 5 
+
+```
+
+
+I chose spearman correlation
+
+```{r}
+all.spearman <- cor(all, method = "spearman", use = "pairwise")
+```
+
+```{r}
+##### network graph #####
+InsectInjuiry <- 1:13
+Disease <- 14:29
+injuries <- list(InsectInjuiry, Disease)
+diag(all.spearman) <- 0
+```
+
+
+
+```{r echo = FALSE, fig.width=7, fig.height=7, fig.align='center'}
+#par(mfrow=c(1,2))
+
+Names <- c("deadhead", "whitehead" ,"silvershoot", "whorl maggot", "leaffolder", "defoliators" ,"brown plant hopper", "white backed plant hopper", "army worm","rice bug", "rice black bug","green leaf hopper", "singk bug", "bacterial leaf blight", "leaf blast", "brown spot",   "bacterial leaf streak", "narrow brown spot",  "red stripe", "leaf scald","shealth blight",  "shealth rot",  "stem rot",  "false smut",  "neck blast",  "dirty panicle",  "rice tugro disease" , "ragged stund disease", "rat damages")
+
+qnet <- qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        groups = injuries, 
+        color = c("skyblue", "wheat"),
+        vsize = 5, 
+        line = 3,
+        posCol = "forestgreen",
+        negCol = "firebrick3",
+        borders = FALSE,
+       # legend = TRUE,
+        vTrans = 200,
+        #nodeNames = Names,
+        legend.cex = 0.3,
+        title = "Spearman's correlation"
+        )
+
+# auto_net <- qgraph(cor_auto(all), 
+#         layout = "spring", 
+#         threshold = 0.20,
+#         maximum = 1,
+#         groups = injuries, 
+#         color = c("skyblue", "wheat"),
+#         vsize = 5, 
+#         line = 3,
+#         posCol = "forestgreen",
+#         negCol = "firebrick3",
+#         borders = FALSE,
+#         legend = TRUE,
+#         vTrans = 200,
+#         nodeNames = Names,
+#         legend.cex = 0.3,
+#         title = "use cor_auto() function"
+#         )
+
+# glosso_net <- qgraph(all.spearman, 
+#         layout = "spring",
+#         graph = "glasso",
+#         sampleSize = nrow(all),
+#         #threshold = 0.20,
+#         #maximum = 1,
+#         groups = injuries, 
+#         color = c("skyblue", "wheat"),
+#         vsize = 5, 
+#         line = 3,
+#         posCol = "forestgreen",
+#         negCol = "firebrick3",
+#         borders = FALSE,
+#         legend = TRUE,
+#         vTrans = 200,
+#         nodeNames = Names,
+#         legend.cex = 0.3,
+#         title = "Glasso"
+#         )
+
+```
+
+from this I would try to use igraph package to visualize the network graph the m 
+
+```{r fig.width=7, fig.height=7, fig.align='center'}
+inet <- as.igraph(qnet) # export to igraph object because I use qgraph package to 
+adj <- get.adjacency(inet, attr = "weight", sparse = F) # from igraph we need only adjancy matrix
+# adj is matrix class
+rownames(adj) <- names(all)
+colnames(adj) <- names(all)
+
+abadj <- abs(adj)
+# plot igraph network model
+ig <- graph.adjacency(adj, mode= "undirected", weighted = TRUE, diag=FALSE)
+ab.ig <- graph.adjacency(abadj, mode= "undirected", weighted = TRUE, diag=FALSE)
+
+L <- layout.fruchterman.reingold(ig)
+plot(ig, layout = L)
+```
+
+```{r fig.width=7, fig.height=7, fig.align='center'}
+
+cluster_walktrap(ig)
+
+group_wlk <- membership(cluster_walktrap(ig))
+group_edge <- membership(cluster_edge_betweenness(ab.ig))
+group_greedy <- membership(cluster_fast_greedy(ab.ig))
+group_eigen <- membership(cluster_leading_eigen(ab.ig))
+group_louvain <- membership(cluster_louvain(ab.ig))
+group_optimal <- membership(cluster_optimal(ab.ig))
+
+
+cluster_optimal(ab.ig)
+
+group_wlk
+group_edge
+group_greedy
+group_eigen
+group_louvain
+group_optimal
+
+#par(mfrow=c(4,2))
+
+qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        color = group_wlk, 
+        title = "walk trap",
+        vsize = 5, 
+        line = 3,
+        legend = FALSE,
+        vTrans = 200
+)
+```
+
+Walk trap comminity 
+
+Blue group: Stink bug:STB and WH: white head
+
+G1: bacterial leaf blight and silver shoot are in the same group as well
+
+Grey group: whorl maggot
+
+Black group: amry worm and flase smut and neck blast in the group
+
+Green group leaf scald, ragged stunt, sheath rot, bacterial leaf streak, leaf blase, brown spot, rice black bug, sheath rod, dead heart
+
+Pink group: white backed plant hopper
+
+Yellow group: brown plant hopper
+
+Red group: rice tungro disease, dirty panicle ragged stunt disease, leaf folder, sheathblight defoliators, green leaf hopper, rat damage
+
+
+1 fsmx nbx
+2 lfa defa glhx shbx dpx rtdx rtx
+3 dhx lba bsa blsa nbsa rsa lsa shrx srx
+4 whx
+5 ssx
+6 wma
+7 bphx
+8 wbphx
+9 awx
+10 rbx
+11 rbbx
+12 stbx
+13 blba
+
+dhx  whx  ssx  wma  lfa defa bphx wbpx  awx  rbx rbbx glhx stbx blba  lba 
+   3    4    5    6    2    2    7    8    9   10   11    2   12   13    3 
+   bsa blsa nbsa  rsa  lsa shbx shrx  srx fsmx  nbx  dpx rtdx rsdx  rtx 
+   3    3    3    3    3    2    3    3    1    1    2    2    2    2
+
+
+```{r}
+qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        color = group_edge, 
+        title = "group_edge",
+        line = 3,
+        legend = TRUE,
+       nodeNames = Names,
+        legend.cex = 0.3,
+        vTrans = 200
+)
+```
+
+G1: STB DHX because there is zero and one connects to other variables
+
+G2: FSM, NBX there are close heach other
+
+G3: DPX, DEF, GLH, RTX I have no idea why dpx included in the group
+
+G1: dhx
+
+G2: whx
+
+G3: ssx wma bphx blba lba bsa blsa rsa lsa shrx
+
+G4: lfa shbx
+
+G5: defa glhx rtx
+
+G6: wbph
+
+G7: awx rtdx rsdx
+
+G8: rbbx srz
+
+G9: stbx
+
+G10: bsa 
+
+G11: nbsa
+
+G12: fsmx nbx
+
+G13 dpx
+
+
+```{r}
+qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        color = group_greedy, 
+        title = "group_greedy",
+        vsize = 5, 
+        line = 3,
+        legend = TRUE,
+       nodeNames = Names,
+        legend.cex = 0.3,
+        vTrans = 200
+)
+```
+
+G1: whx lfa defa glhx shbx rtx
+
+G2: dhx bphx wbpx rbbx nbsa srx
+
+G3 awx rbx lba bsa dpx rtdx rsdx
+
+G4: ssx wma blba blsa rsa lsa shrx
+
+G5: fsmx nbx 
+
+G6: stbx
+
+
+```{r}
+qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        color = group_eigen, 
+        title = "group_eigen",
+        vsize = 5, 
+        line = 3,
+        legend = TRUE,
+       nodeNames = Names,
+        legend.cex = 0.3,
+        vTrans = 200
+)
+```
+
+Inset the description here for engin comminity 
+
+Red: Stink bug
+
+Pink: False smut
+
+Blue: Lead scald, red stripe, sheath rot, bacterial leaf strak, whorl maggot, silver shoot, bacterial leaf blight
+
+Black: WBPH, BPH, NBS, Stem Rot, DH
+
+light blue: RTD, AW, DPX, RBX
+
+```{r}
+qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        color = group_louvain, 
+        title = "group_louvain",
+        vsize = 5, 
+        line = 3,
+        legend = TRUE,
+       nodeNames = Names,
+        legend.cex = 0.3,
+        vTrans = 200
+)
+```
+Inset the description here for louvanin comminity I like this grop communities personally with some reasons
+
+Red: RSA, WMA, BLS, BLB, SSX, SHR, LSA, BPH
+
+Blue: WBPH, NBS, SRX, DHX
+
+Pink: LFA, SHB, DEF, RTX, GLH
+
+lingt blue:TRD, AWX, RSD, DPX, WHX, BSA, LBA, WHX(8)
+
+Green: false smut, NBX (2)
+
+Black: Stink bug (1)
+
+```{r}
+qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        color = group_optimal, 
+        title = "group_optimal",
+        vsize = 5, 
+        line = 3,
+        legend = TRUE,
+       nodeNames = Names,
+        legend.cex = 0.3,
+        vTrans = 200
+)
+```
+
+### communities of the function of fast greedy
+
+Clustering by the Eigen clustering showed that 
+
+Class one (red) -> Leaffolder, shealth blight, defoliators, rat damages, green leaf hopper, and whitehead (6)
+
+Class two (blue) -> rice tugro disease, rice bug, dirty panicle,  brown spot ragged stund disease, army worm, leaf blast, and rice black bug 
+
+Class three (black) -> brown plant hopper , white backed plant hopper, neck blast, stem rot, deadheart (5)
+
+Class four (green) -> whorl maggot, bacterial leaf streak, sheath rot, leaf scald, silver shoot, bacterial leaf blight, narrow brown spot (7)
+
+Class five (pink) -> False smut and neck blast (2)
+
+Class six -> Stink bug (1)
+
+```{r}
+qgraph(all.spearman, 
+        layout = "spring", 
+        threshold = 0.20,
+        maximum = 1,
+        group = group_eigen,
+      # node.color = brewer.pal(7,"Set2"),
+        title = "group_eigen",
+        vsize = 5, 
+        line = 3,
+        legend = TRUE,
+        nodeNames = Names,
+        legend.cex = 0.3,
+        vTrans = 200
+)
+
+```
+From this, there are 5 groups.
+
+Red group: Stink bug (1)
+
+Pink group: false smut (1)
+
+Blue group: NBX, LSA, RSA, SHR, SSX, BLB, SSX, BLS, WMA (8)
+
+light blue group: RBX, RTD, DPX, BSA, RSD, LBA, AWX (7)
+
+Black group: WBPH, BPH, NBS, SRX, DHX (5)
+
+
+### Considering the comminity by edges betweenness fuctionc. I think that the communites are not make senses. hight betweenness in one group and low betweenness are in other group.
+
+```{r fig.width = 10, fig.height=7, fig.align='center'}
+# compute the topological properties
+ppi <- 300
+png("centering.png", width = 9*ppi, height = 6*ppi, res = ppi)
+cen <- centrality_auto(qnet)
+
+topo <- cen$node.centrality
+topo$node <- row.names(topo)
+row.names(topo) <- NULL
+topo.melt <- melt(topo)
+
+p1 <- topo %>% ggplot(aes(x= Strength, y = reorder(node, Strength))) +
+         geom_point(size = 3, color ="red") +
+        theme_bw() +
+        theme(panel.grid.major.x =  element_blank(),
+              panel.grid.minor.x =  element_blank(),
+              panel.grid.major.y = element_line(color = "grey", linetype = 3)) +
+        xlab("Node degree") + 
+        ylab("Variables")  
+
+p2 <- topo %>% ggplot(aes(x= Betweenness, y = reorder(node, Betweenness))) + 
+        geom_point(size = 3, color ="blue") +
+        theme_bw() +
+        theme(panel.grid.major.x =  element_blank(),
+              panel.grid.minor.x =  element_blank(),
+              panel.grid.major.y = element_line(color = "grey", linetype = 3)) +
+        xlab("Betweenness") + 
+        ylab("Variables")  
+
+# Compute clustering coefficients
+
+clust <- clustcoef_auto(qnet)
+clusZ.sp <- NULL
+clusZ.sp$node <- rownames(clust)
+clusZ.sp$clustZhang <- clust$clustZhang
+clusZ.sp <- as.data.frame(clusZ.sp)
+
+p3 <- clusZ.sp %>% 
+        ggplot(aes(x= clustZhang, y = reorder(node, clustZhang))) +
+        geom_point(size = 3, color ="yellow") + 
+        theme_bw() +
+        theme(panel.grid.major.x =  element_blank(),
+              panel.grid.minor.x =  element_blank(),
+              panel.grid.major.y = element_line(color = "grey", linetype = 3)) +
+        xlab("Clustering coefficient") + 
+        ylab("Variables")
+
+plot_grid(p1, p2, p3, labels=c("A", "B", "C"), ncol = 3, nrow = 1 )
+dev.off()
+```
+This figure reveals that most cognitive depressive symptoms (e.g., ‘‘feeling sad’’ (sad), ‘‘feeling irritable’’ (irr), ‘‘quality of mood’’ (qmo), ‘‘response of your mood to good or desired events’’ (rmo), ‘‘concentration problems’’ (con), and ‘‘self criticism and blame’’ (sel)) seem to be clustered together. 
+
+
+ These symptoms also seem to score moderate to high on at least two out of three centrality measures (Figure 4). For example, ‘‘rmo’’ has a moderate strength and a very high clustering coefficient, whereas it has a low betweenness. This indicates that activation in the network does not easily affect response of mood to positive events (low betweenness), but that, 
+ 
+if the symptom is activated, the cluster will tend to stay infected because of the high interconnectivity (high clustering coefficient). 
+ 
+ Another interesting example is ‘‘energy level’’ (ene), which has a high node strength and betweenness, but a moderate clustering coefficient. 
+ 
+ Apparently, energy level has many and/or strong connections (high strength) and lies on many paths between symptoms (high betweenness), whereas it is not part of a strongly clustered group of symptoms (moderate clustering coefficient). This symptom is probably more important in passing information through the network, or between other clusters, and might, therefore, be an interesting target for intervention.
+
+Which nodes have high strength (node degree) between the node which have high betweenness 
+
+As opposed to cognitive depressive symptoms, most anxiety and somatic symptoms (e.g., ‘‘panic/phobic symptoms’’ (pan), ‘‘aches and pains’’ (ach), ‘‘psychomotor agitation’’ (agi)) feature low scores on at least two centrality measures.  Apparently, most anxiety and somatic symptoms either are less easily affected by other activated symptoms, do not tend to stay infected because of low interconnectivity (low clustering coefficient), or are less important for transfer- ring information through the network (low betweenness). This is to be expected, since participants with a current or history of anxiety disorder are excluded from our sample. The item ‘‘feeling anxious’’ (anx), however, seems to be an important exception; feeling anxious does have a high node strength, a relatively high betweenness, and a moderate clustering coefficient. Apparently, feeling anxious does play an important role in our sample of depressive and healthy persons: it can be activated very easily, since a lot of information flows through it (high betweenness), and, in turn, it can activate  many other symptoms because it has many neighbours (high node strength, moderate clustering). The role of feeling anxious in our network   is   in   line   with   high   comorbidity   levels   of   anxiety   and
+ 
+ ## Gene Significant
+ mu
+ 
+```{r}
+# verboseScatterplot(abs(geneModuleMembership[moduleGenes, column]),
+#                    abs(geneTraitSignificance[moduleGenes, 1]),
+#                    xlab = paste("Module Membership in", module, "module"),
+#                    ylab = "Gene significance for body weight",
+#                    main = paste("Module membership vs. gene significance\n"),
+#                    cex.main = 1.2, cex.lab = 1.2, cex.axis = 1.2, col = module)
+
+```
+
+
+why? the flase smut and neck blast
+
+
+rice bug or stink bug control in the 
+
+I use

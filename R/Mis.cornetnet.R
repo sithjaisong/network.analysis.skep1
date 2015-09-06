@@ -144,7 +144,7 @@ vCorPear <- as.vector(all.pearson)
 noO <-vCorPear[!vCorPear %in% 1]
 histogram(noO)
 # Pearson's correlation coefficents of survey data are around tendding on the negative values.
-histogram( as.vector(all.spearman))
+histogram(as.vector(all.spearman))
 # the distribution of correlation coefficients are scatttered around the -5 to 5 
 
 #====================================================

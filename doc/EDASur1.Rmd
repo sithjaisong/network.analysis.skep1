@@ -3,6 +3,8 @@ title: "Exploratory Data Analysis of Survey Data of SKEP Phase I"
 author: "Sith J"
 date: "February 19, 2558 BE"
 output:
+  html_document:
+    toc: yes
   pdf_document:
     highlight: zenburn
     toc: yes
@@ -12,13 +14,15 @@ output:
 ```{r library}
 #### Load Library ####
 library(gdata) # load xls file
-library(readxl)
+require("xlsx")
 library(plyr) 
 library(dplyr)
 library(reshape)
 library(reshape2)
 library(lubridate)
 library(ggplot2)
+require(Amelia)
+require(GGally)
 #### end load libraries ####
 ```
 
@@ -34,14 +38,15 @@ setwd(wd)
 
 ```{r}
 ##### Load raw data (Survey data in SKEP 1) ####
-#Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" 
-Filepath <- "E:/Google Drive/1.SKEP1/SKEP1survey.xls" 
-# please check your file in shared google drive
-data <- read_excel(Filepath, 
-                 sheet = 1
-                 )
+#Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" for mac users
+Filepath <- "E:/Google Drive/Data/SYT-SKEP/Survey/SKEP1survey.csv" # for window users
+
+data <- read.csv(Filepath)
+
 #### End load raw data ####
 ```
+
+
 
 ```{r}
 #### Examine the raw data ####
@@ -52,18 +57,19 @@ data <- read_excel(Filepath,
 ```
 
 ```{r}
+#### to lower variable names ####
+names(data) <- tolower(names(data))
+names(data)
+#### end setting the varibales ####
+```
+
+```{r}
 #### clean define the missing value ####
 data[data == "-"] <- NA # replace '-' with NA
 data[data == ""] <- NA # replace 'missing data' with NA
 #### end cleaning of data ####
 ```
 
-```{r}
-#### to lower variable names ####
-names(data) <- tolower(names(data))
-#### end setting the varibales ####
-data$fymcode
-```
 
 ```{r}
 data <- transform(data, 
@@ -174,18 +180,15 @@ data$varcoded <- NULL # I will recode them
 data$fym.coded <- NULL
 data$mu <- NULL # no record
 data$nplsqm <- NULL
-#### Delete the unnessary variables variables without data (NA) ####
+#### Delete the unnessary variables which are without data (NA) ####
 ```
-
 
 ```{r}
 #### Recoding the factor ####
 # Previous crop
 data$pc <- ifelse(data$pc == "rice", 1, 0)
- 
 #### end of recoding the factor ####
 ```
-
 
 ```{r}
 # fym there are two type 0 and 1, raw data are recorded as no, yes, and value, if the value is 0 which mean 0 and if the value more than 0 which means 1 
@@ -236,7 +239,6 @@ levels(data$cs)[levels(data$cs) == "very good"] <- 5
 ## Start Explore the data
 
 ```{r }
-library(Amelia)
 missmap(data, main = 'Survey Data PhaseI - Missing data',
         col = c("red", "black"), legend = FALSE)
 ```
@@ -272,20 +274,21 @@ ggplot(data=pc, aes(x = as.factor(Var.1), y = value)) +
               )
 ```
 
-revalue(as.factor(pc), c( "0" = "Others", "1"" = "Riceclass("))
-class(data$pc)
-The data of yield
+
 ```{r yield, fig.height = 3}
 datYmean <- ddply(data, "country", summarise, yield.mean=mean(yield))
 ##### boxplot ~ yield bt country
 
-ggplot(data, aes(x=yield)) + geom_histogram(binwidth=.5, colour="black", fill="white") + 
+g <- ggplot(data, aes(x = yield)) + geom_histogram(binwidth=.5, colour="black", fill="white") + 
     facet_grid(country ~ .) +
     geom_vline(data=datYmean, aes(xintercept=yield.mean),
                linetype="dashed", size=1, colour="red") +
         ggtitle("Yield by Country")
 
-g + geom_boxplot(color = "blue", alpha = 0.2) +
+g
+
+ggplot(data, aes(y = yield, x = country))+
+        geom_boxplot(color = "blue", alpha = 0.2) +
         theme_bw() +
         theme(panel.grid.major.x = element_blank(),
               panel.grid.minor.x = element_blank(),
@@ -303,62 +306,12 @@ ggplot(data=data, aes(x = as.factor(cem))) +
 ```
 
 
-
-```{r}
-m.all <- melt(all)
-varnames <- colnames(all)
-i <- 1
-out <- NULL
-for(i in 1:length(varnames)) {
-        gdata <- m.all %>% filter(variable == varnames[i])
-        p <- ggplot(gdata, aes(x = value)) + 
-        geom_histogram(stat = "bin") + ggtitle(paste("Histogram of", varnames[i], sep = " "))
-        dev.new()
-        print(p) 
-        out[[i]] <- p
- }
-grid.arrange(out[[1]],
-             out[[2]],
-             out[[3]],
-             out[[4]],
-             out[[5]],
-             out[[6]],
-             out[[7]],
-             out[[8]],
-             out[[9]],
-             out[[10]],
-             out[[11]],
-             out[[12]],
-             out[[13]],
-             out[[14]],
-             out[[15]],
-             out[[16]],
-             out[[17]],
-             out[[18]],
-             out[[19]],
-             out[[20]],
-             out[[21]],
-             out[[22]],
-             out[[23]],
-             out[[24]],
-             out[[25]],
-             out[[26]],
-             out[[26]],
-             out[[28]],
-             out[[29]],
-             out[[30]],
-             nrow = 5
-        )
+```{r fig.width=7, fig.height=7, fig.align='center'}
+# ggpairs(data, lower=list(continuous="smooth", params=c(colour="blue")),
+#   diag=list(continuous="bar", params=c(colour="blue")), 
+#   upper=list(params=list(corSize=6)), axisLabels='show')+
+# theme(legend.position = "none", 
+#         panel.grid.major = element_blank(), 
+#         axis.ticks = element_blank(), 
+#         panel.border = element_rect(linetype = "dashed", colour = "black", fill = NA))
 ```
-
-```{r}
-
-ggpairs(all, lower=list(continuous="smooth", params=c(colour="blue")),
-  diag=list(continuous="bar", params=c(colour="blue")), 
-  upper=list(params=list(corSize=6)), axisLabels='show')+
-theme(legend.position = "none", 
-        panel.grid.major = element_blank(), 
-        axis.ticks = element_blank(), 
-        panel.border = element_rect(linetype = "dashed", colour = "black", fill = NA))
-```
-

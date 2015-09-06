@@ -81,7 +81,7 @@ idn <- data %>%
 
 idn <- idn[,apply(idn, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
-idn <- ind[complete.cases(idn),] # exclude row which cantain NA
+idn <- idn[complete.cases(idn),] # exclude row which cantain NA
 #### end Indonesia subset ####
 
 #### Thailand n = 105 ####
@@ -92,7 +92,7 @@ tha <- data %>%
 
 tha <- tha[,apply(tha, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
-tha <- ind[complete.cases(tha),] # exclude row which cantain NA
+tha <- tha[complete.cases(tha),] # exclude row which cantain NA
 #### end Thailand subset ####
 
 #### Vietnam n = 105 ####
@@ -102,7 +102,7 @@ vnm <- data %>%
 
 vnm <- vnm[,apply(vnm, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
-vnm <- ind[complete.cases(vnm),] # exclude row which cantain NA
+vnm <- vnm[complete.cases(vnm),] # exclude row which cantain NA
 #### end Vietnam subset ####
 
 #### Save data to R object ####

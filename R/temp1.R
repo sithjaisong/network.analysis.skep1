@@ -69,7 +69,7 @@ all.MI <- mutualInfoAdjacency(all)$AdjacencyUniversalVersion1
 
 #### similarity and dissimilarity
 #eucladiant
-#Kullback–Leibler
+#Kullback�Leibler
 #Bray–Curtis
 #source("function/cor.mtest.R")
 #res1 <- cor.mtest(all, 0.95)

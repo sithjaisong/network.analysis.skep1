@@ -15,7 +15,9 @@ library(dplyr)
 
 #### Set working directory ####
 # set your working directory
-wd <- '~/Documents/R.github/network.analysis.skep1' 
+#wd <- '~/Documents/R.github/network.analysis.skep1' 
+wd <- 'C:/Users/sjaisong/Documents/GitHub/network.analysis.skep1' # for window
+
 setwd(wd)
 #### end of set wotking directory ####
 
