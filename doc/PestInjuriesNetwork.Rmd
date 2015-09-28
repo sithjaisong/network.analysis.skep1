@@ -23,24 +23,24 @@ You can also embed plots, for example:
 
 ```{r load data}
 Filepath <- "E:/Google Drive/1.SKEP1/SKEP1survey.xls" # please check your file in shared google drive
+Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls"
 data <- readWorksheetFromFile(Filepath, sheet = 1)
 ```
 
-```{r}
+```{r clean data}
 #### clean define the missing value ####
 data[data == "-"] <- NA # replace '-' with NA
 data[data == ""] <- NA # replace 'missing data' with NA
 #### end cleaning of data ####
 ```
 
-```{r}
+```{r rename names of variables}
 #### to lower variable names ####
 names(data) <- tolower(names(data))
 #### end setting the varibales ####
-
 ```
 
-```{r}
+```{r correct the type of variables}
 data <- transform(data, 
                   phase = as.factor(phase),
                   fno = as.character(fno),
@@ -129,7 +129,7 @@ data <- transform(data,
 ) 
 ```
 
-```{r}
+```{r select out the variable}
 #### Delete the unnessary variables variables without data (NA) ####
 data$phase <- NULL # there is only one type yype of phase in the survey
 data$identifier <- NULL # this variable is not included in the analysis
@@ -149,6 +149,13 @@ data$mu <- NULL # no record
 data$nplsqm <- NULL
 #### Delete the unnessary variables variables without data (NA) ####
 ```
+
+```{r}
+describe(data)
+```
+
+
+
 
 ```{r}
 OutputProfile <- data %>% 
@@ -277,26 +284,6 @@ php_qnet <- qgraph(cormat,
                #filetype = "png",
                #filenames = "figs/ind_network.png"
 )
-qgraph(cormat, 
-               layout = "spring", 
-               threshold = 0.20,
-               maximum = 1,
-               groups = injuries, 
-               color = c("skyblue", "wheat"),
-               vsize = c(1.5,10), 
-               line = 3,
-               diag = FALSE,
-               posCol = "forestgreen",
-               negCol = "firebrick3",
-               borders = FALSE,
-               # legend = TRUE,
-               vTrans = 200,
-               #nodeNames = Names,
-               legend.cex = 0.3,
-               title = "Philippines"
-               #filetype = "png",
-               #filenames = "figs/ind_network.png"
-)
 
 # compute the topological properties
 cen <- centrality_auto(php_qnet)
@@ -374,26 +361,7 @@ idn_qnet <- qgraph(cormat,
                #filenames = "figs/ind_network.png"
 )
 
-qgraph(cormat, 
-               layout = "spring", 
-               threshold = 0.20,
-               maximum = 1,
-               groups = injuries, 
-               color = c("skyblue", "wheat"),
-               vsize = c(1.5, 10), 
-               line = 3,
-               diag = FALSE,
-               posCol = "forestgreen",
-               negCol = "firebrick3",
-               borders = FALSE,
-               # legend = TRUE,
-               vTrans = 200,
-               #nodeNames = Names,
-               legend.cex = 0.3,
-               title = "Indonesia"
-               #filetype = "png",
-               #filenames = "figs/ind_network.png"
-)
+
 
 # compute the topological properties
 cen <- centrality_auto(idn_qnet)
@@ -471,26 +439,6 @@ ind_qnet <- qgraph(cormat,
                #filenames = "figs/ind_network.png"
 )
 
-qgraph(cormat, 
-               layout = "spring", 
-               threshold = 0.20,
-               maximum = 1,
-               groups = injuries, 
-               color = c("skyblue", "wheat"),
-               vsize = c(1.5, 10), 
-               line = 3,
-               diag = FALSE,
-               posCol = "forestgreen",
-               negCol = "firebrick3",
-               borders = FALSE,
-               # legend = TRUE,
-               vTrans = 200,
-               #nodeNames = Names,
-               legend.cex = 0.3
-               #title = "Spearman's correlation"
-               #filetype = "png",
-               #filenames = "figs/ind_network.png"
-)
 # compute the topological properties
 cen <- centrality_auto(ind_qnet)
 topo <- cen$node.centrality
@@ -554,27 +502,6 @@ tha_qnet <- qgraph(cormat,
                groups = injuries, 
                color = c("skyblue", "wheat"),
                vsize = 5, 
-               line = 3,
-               diag = FALSE,
-               posCol = "forestgreen",
-               negCol = "firebrick3",
-               borders = FALSE,
-               # legend = TRUE,
-               vTrans = 200,
-               #nodeNames = Names,
-               legend.cex = 0.3,
-               title = "Thailand"
-               #filetype = "png",
-               #filenames = "figs/ind_network.png"
-)
-
-qgraph(cormat, 
-               layout = "spring", 
-               threshold = 0.20,
-               maximum = 1,
-               groups = injuries, 
-               color = c("skyblue", "wheat"),
-               vsize = c(1.5, 10), 
                line = 3,
                diag = FALSE,
                posCol = "forestgreen",

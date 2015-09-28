@@ -11,22 +11,22 @@ library(plyr)
 library(dplyr)
 library(qgraph)
 library(WGCNA)
+library(XLConnect)
 ```
 
 ```{r}
 #### Set working directory and filepath ####
-wd <- "~/Documents/R.github/network.analysis.skep1" 
+wd <- "~/Documents/Github/network.analysis.skep1" 
 setwd(wd)
 #### End directory and filepath ####
 ```
 
 ## Load data survey
 ```{r data}
-Filepath <- "~/Documents/R.github/network.analysis.skep1/data/clean.data.csv" 
-data <- read.csv(Filepath, 
-                 header = TRUE,
-                 stringsAsFactor = FALSE)
+Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls"
+data <- readWorksheetFromFile(Filepath, sheet = 1)
 str(data)
+names(data) <- tolower(names(data))
 ```
 
 ## Select output profile
@@ -97,7 +97,7 @@ all <- data %>%
 
 all <- all[,apply(all, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
 
-all<- all[complete.cases(all),] # exclude row which cantain NA
+all <- all[complete.cases(all),] # exclude row which cantain NA
 #### Spear's man correaltion network of SKEP1 ####
 all.spear <- cor(all, method = "spearman")
 all.pear <- cor(all, method = "pearson")

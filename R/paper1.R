@@ -1,3 +1,5 @@
+# This script is the R script for running test the corelation with the Spearman correlation for both the cropping practice and crop injuires in differenct production environments.
+
 ###Load libraries ####
 require(dplyr)
 require(ggplot2)
@@ -14,20 +16,21 @@ require(reshape)
 require(reshape2)
 require(RColorBrewer)
 require(WGCNA)
+require(XLConnect)
 
 #### Set working directory and filepath ####
-#wd <- "~/Documents/R.github/network.analysis.skep1" 
-wd <- 'C:/Users/sjaisong/Documents/GitHub/network.analysis.skep1'
+#wd <- 'C:/Users/sjaisong/Documents/GitHub/network.analysis.skep1' 
+wd <- "~/Documents/Github/network.analysis.skep1" # for Mac
 setwd(wd)
 
-#Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" for mac users
-Filepath <- "E:/Google Drive/Data/SYT-SKEP/Survey/SKEP1survey.csv" # for window users
+#### Loading the survey data #####
+Filepath <- "~/Google Drive/1.SKEP1/SKEP1survey.xls" # for mac users
+#Filepath <- "E:/Google Drive/Data/SYT-SKEP/Survey/SKEP1survey.csv" # for window users
+data <- readWorksheetFromFile(Filepath, sheet = 1) # use the XLCOnnect package
+#str(data)
 
-data <- read.csv(Filepath)
-
+# change the names of variables
 names(data) <- tolower(names(data))
-
-describe(data)
 
 #### Delete the unnessary variables variables without data (NA) ####
 #### Keep only the cropping practices and injury profiles #####
@@ -49,9 +52,9 @@ data$fym.coded <- NULL
 data$mu <- NULL # no record
 data$nplsqm <- NULL
 data$fno <- NULL
-data$country <- NULL
+# data$country <- NULL
 data$year <- NULL
-data$season <- NULL
+#data$season <- NULL
 data$lat <- NULL
 data$long <- NULL
 data$pc <- NULL
@@ -77,8 +80,13 @@ data$thr <- NULL
 data$pm <- NULL
 ####end of remove non cropping practice and injury profiles
 
-data <- transform(data, 
-                  n = as.numeric(n),
+########================ Use Vietnam data ============####
+vnm.ds <- data %>% filter(country == "VNM" & season == "DS")
+
+# correct technically
+vnm.ds <- vnm.ds %>%
+        select(-c(country, season)) %>%
+        transform( n = as.numeric(n),
                   p = as.numeric(p) ,
                   k = as.numeric(k),
                   mf = as.numeric(mf),        
@@ -128,93 +136,105 @@ data <- transform(data,
                   rtx = as.numeric(rtx)
 ) 
 
+levels(vnm.ds$wcp)[levels(vnm.ds$wcp) == "hand"] <- 1
+levels(vnm.ds$wcp)[levels(vnm.ds$wcp) == "herb"] <- 2
+levels(vnm.ds$wcp)[levels(vnm.ds$wcp) == "herb-hand"] <- 3
 
-levels(data$wcp)[levels(data$wcp) == "hand"] <- 1
-levels(data$wcp)[levels(data$wcp) == "herb"] <- 2
-levels(data$wcp)[levels(data$wcp) == "herb-hand"] <- 3
+vnm.ds$wcp <- as.numeric(as.factor(vnm.ds$wcp))
 
-data$wcp <- as.numeric(as.factor(data$wcp))
+describe(vnm.ds)
+# check the data properties
+
+#vnm.ds <- vnm.ds[ ,apply(vnm.ds, 2, var, na.rm = TRUE) != 0] # exclude the column with variation = 0
+
+#vnm.ds <- vnm.ds[complete.cases(vnm.ds),] # exclude row which cantain NA
+
+vnm.ds$rbpx <- NULL
 
 ######### Drow the histrogram #####
-# m.data <- melt(data)
-# varnames <- colnames(data)
-# i <- 1
-# out <- NULL
-# for(i in 1:length(varnames)) {
-#         gdata <- m.data %>% filter(variable == varnames[i])
-#         p <- ggplot(gdata, aes(x = value)) + 
-#                 geom_histogram(stat = "bin") + ggtitle(paste("Histogram of", varnames[i], sep = " "))
-#         dev.new()
-#         print(p) 
-#         out[[i]] <- p
-# }
-# 
-# grid.arrange(out[[1]],
-#              out[[2]],
-#              out[[3]],
-#              out[[4]],
-#              out[[5]],
-#              out[[6]],
-#              out[[7]],
-#              out[[8]],
-#              out[[9]],
-#              out[[10]],
-#              out[[11]],
-#              out[[12]],
-#              out[[13]],
-#              out[[14]],
-#              out[[15]],
-#              out[[16]],
-#              out[[17]],
-#              out[[18]],
-#              out[[19]],
-#              out[[20]],
-#              out[[21]],
-#              out[[22]],
-#              out[[23]],
-#              out[[24]],
-#              out[[25]],
-#              out[[26]],
-#              out[[26]],
-#              out[[28]],
-#              out[[29]],
-#              out[[30]],
-#              out[[31]],
-#              out[[32]],
-#              out[[33]],
-#              out[[34]],
-#              out[[35]],
-#              out[[36]],
-#              out[[37]],
-#              out[[38]],
-#              out[[39]],
-#              out[[40]],
-#              out[[41]],
-#              out[[42]],
-#              out[[43]],
-#              out[[44]],
-#              out[[45]],
-#              out[[46]],
-#              out[[47]],
-#              out[[48]],
-#              out[[49]],
-#              nrow = 10
-# )
+names(vnm.ds)
+data <-  vnm.ds
+m.data <- melt(data)
+varnames <- colnames(data)
+i <- 1
+out <- NULL
+for(i in 1:length(varnames)) {
+        gdata <- m.data %>% filter(variable == varnames[i])
+        p <- ggplot(gdata, aes(x = value)) + 
+                geom_histogram(stat = "bin") + ggtitle(paste("Histogram of", varnames[i], sep = " "))
+        dev.new()
+        print(p) 
+        out[[i]] <- p
+}
 
+gdata <- m.data %>% filter(variable == varnames[1])
+p <- ggplot(gdata, aes(x = value)) + 
+        geom_histogram(stat = "bin") + ggtitle(paste("Histogram of", varnames[1], sep = " "))
 
+grid.arrange(out[[1]],
+             out[[2]],
+             out[[3]],
+             out[[4]],
+             out[[5]],
+             out[[6]],
+             out[[7]],
+             out[[8]],
+             out[[9]],
+             out[[10]],
+             out[[11]],
+             out[[12]],
+             out[[13]],
+             out[[14]],
+             out[[15]],
+             out[[16]],
+             out[[17]],
+             out[[18]],
+             out[[19]],
+             out[[20]],
+             out[[21]],
+             out[[22]],
+             out[[23]],
+             out[[24]],
+             out[[25]],
+             out[[26]],
+             out[[26]],
+             out[[28]],
+             out[[29]],
+             out[[30]],
+             out[[32]],
+             out[[33]],
+             out[[34]],
+             out[[35]],
+             out[[36]],
+             out[[37]],
+             out[[38]],
+             out[[39]],
+             out[[40]],
+             out[[41]],
+             out[[42]],
+             out[[43]],
+             out[[44]],
+             out[[45]],
+             out[[46]],
+             out[[47]],
+             nrow = 10
+)
+
+# rename the variables
 abbre <- c("CEM","N", "P", "K", "MF", "WCP", "IU", "HU", "FU", "LDG", "WA", "WB" ,"DH", "WH", "SS", "WM", "LF", "DEF", "BPH", "WPH", "AM", "RB", "RBB", "GLH", "STB","RBP","HB","BB", "BLB",  "LB", "BS", "BLS", "NBS", "RS", "LS", "SHB", "SHR", "SR", "FSM", "NB", "DP", "RTD", "RSD","GSD", "RT")
 names(data) <-abbre
 
+# compute the corr eff based on different corr measures
+pearson <- cor(vnm.ds, method = "pearson", use = "pairwise.complete.obs") # pearson correlation
 
-pearson <- cor(data, method = "pearson", use = "pairwise.complete.obs") # pearson correlation
+spearman <- cor(vnm.ds, method = "spearman", use = "pairwise.complete.obs") # spearman correlation
 
-spearman <- cor(data, method = "spearman", use = "pairwise.complete.obs") # spearman correlation
+kendall <- cor(vnm.ds, method = "kendall", use = "pairwise.complete.obs")# kendall correlation
 
-kendall <- cor(data, method = "kendall", use = "pairwise.complete.obs")# kendall correlation
+biweight <- bicor(vnm.ds, use = "pairwise.complete.obs") # Biweight Midcorrelation from WGCNA package
 
-biweight <- bicor(data, use = "pairwise.complete.obs") # Biweight Midcorrelation from WGCNA package
-
-
+#### Cluster Analysis using Heat map ####
+# compare similarity of corr eff from each measure using cluster analysis base on Euclid
 ### Peason correlation
 df.pearson <- as.data.frame(pearson)
 df.pearson.corval <- df.pearson[1]
@@ -227,7 +247,6 @@ df.spear.corval <- df.spear[1]
 colnames(df.spear.corval) <- "Spearman"
 
 ### Kendall correlation
-
 df.kendall <- as.data.frame(kendall)
 df.kendall.corval <- df.kendall[1]
 colnames(df.kendall.corval) <- "Kendall"
@@ -241,23 +260,20 @@ colnames(df.biweight.cor.val) <- "Biweight"
 ##### Combine correlation value of each method ######
 #===================================================
 # will add more correlation
-bind.cor <- cbind(df.pearson.corval,
+cor.bind <- cbind(df.pearson.corval,
                   df.spear.corval,
                   df.kendall.corval,
                   df.biweight.cor.val)
 
 ##### Cluster Analysis and correlation matrix #####
-cor.of.cor <- cor(bind.cor)
+cor.of.cor <- cor(cor.bind)
 pheatmap(cor.of.cor, cellwidth = 50, cellheight = 50, fontsize = 16)
 
 # from here the heat map and dendrogram showing that non-ranking measure and ranking measure still different in the outputs.
 
-
-
 ##### network graph #####
 cropping <- 1:9
-injuries <- 10:45
-
+injuries <- 10:31
 groups_info <- list(cropping, injuries)
 
 diag(spearman) <- 0
@@ -284,7 +300,6 @@ q.spearman <- qgraph(
         #filename = "figs/APPSnetwork5"
         title = "Spearman"
 )
-
 c.spearman <- qgraph(
         spearman, 
         layout = "circle", 
@@ -307,10 +322,6 @@ c.spearman <- qgraph(
         #filename = "figs/APPSnetwork5"
         title = "Spearman"
 )
-
-cor_auto(data, missing = "listwise")
-
-describe(data)
 
 c.auto <- qgraph(
         cor_auto(data),
